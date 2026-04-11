@@ -41,7 +41,7 @@ const SegmentedControl = ({ value, onChange, options }) => (
   </div>
 );
 
-// 2. תפריט נפתח מעוצב (Custom Dropdown)
+// 2. תפריט דרופ-דאון
 const CustomSelect = ({ value, onChange, options }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [hovered, setHovered] = useState(null);
@@ -50,7 +50,7 @@ const CustomSelect = ({ value, onChange, options }) => {
   const displayValue = typeof currentItem === 'object' ? currentItem.label : currentItem;
 
   return (
-    <div style={{ position: 'relative', width: '200px', height: '36px', fontFamily: 'Arial, "Helvetica Neue", Helvetica, sans-serif' }}>
+    <div className="select-wrapper" style={{ position: 'relative', width: '200px', height: '36px', fontFamily: 'Arial, "Helvetica Neue", Helvetica, sans-serif' }}>
       {isOpen && <div style={{ position: 'fixed', inset: 0, zIndex: 9 }} onClick={() => setIsOpen(false)} />}
       
       <div
@@ -452,7 +452,8 @@ export default function App() {
     borderRadius: '24px', 
     border: `1px solid rgba(240, 152, 136, 0.25)`, 
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    height: 'fit-content'
   };
 
   const rowFlex = { 
@@ -570,7 +571,6 @@ export default function App() {
           font-family: Arial, "Helvetica Neue", Helvetica, sans-serif !important;
         }
 
-        /* --- צבע ה-Select All --- */
         ::selection {
           background-color: #e69a88 !important;
           color: #082129 !important;
@@ -580,7 +580,6 @@ export default function App() {
           color: #082129 !important;
         }
 
-        /* ביטול החצים בשדות מספר */
         input::-webkit-outer-spin-button,
         input::-webkit-inner-spin-button {
           -webkit-appearance: none;
@@ -590,7 +589,6 @@ export default function App() {
           -moz-appearance: textfield;
         }
 
-        /* Custom Scrollbar */
         ::-webkit-scrollbar {
           width: 6px;
         }
@@ -603,7 +601,6 @@ export default function App() {
           border-radius: 10px;
         }
         
-        /* אפקט ריחוף (Hover) */
         .hover-input {
           transition: all 0.3s ease !important;
           outline: none !important;
@@ -613,30 +610,75 @@ export default function App() {
           box-shadow: inset 0 0 0 1px rgba(230, 154, 136, 0.4) !important;
         }
 
-        /* אפקט פוקוס (Focus) */
         .hover-input:focus {
           background-color: #1c5465 !important;
           box-shadow: 0 0 0 2px rgba(230, 154, 136, 0.8) !important;
           color: #ffffff !important;
         }
 
-        /* --- התאמות למובייל (רספונסיביות) --- */
         .main-layout {
           grid-template-columns: 1fr 1fr;
         }
 
+        .data-card {
+          height: max-content !important;
+          flex: 0 0 auto !important;
+        }
+
+        .data-card > div:last-child {
+          margin-bottom: 0 !important;
+        }
+
+        /* --- התיקון המקיף למובייל --- */
         @media (max-width: 768px) {
           .main-layout {
-            grid-template-columns: 1fr !important; /* הופך לעמודה אחת */
+            grid-template-columns: 1fr !important;
           }
           
-          .hover-input {
-            width: 100% !important; /* מרחיב את השדות לרוחב הטלפון */
-            max-width: 100% !important;
+          /* 1. הקטנת הפונט הכללי של האפליקציה (תוויות, טקסטים) */
+          #salary-simulator-root {
+            font-size: 12px !important; /* ברירת המחדל היא בדרך כלל 16 */
+            padding: 15px 10px !important; 
+          }
+
+          /* 2. הקטנת שדות ההזנה והטקסט שבתוכם */
+          .hover-input , .select-wrapper {
+            width: 140px !important; 
+            max-width: 55vw !important;
+            font-size: 18px !important; /* מקטין את המספרים שמוקלדים */
+          }
+          
+          /* 3. הקטנת הכותרת הראשית */
+          h1 {
+            font-size: 1.8rem !important; /* הקטנתי מ-2.1 ל-1.8 */
+          }
+
+          /* 4. הקטנת כותרות משניות (כמו "נתוני בסיס", "תוספות קבועות") */
+          h2, h3 {
+            font-size: 20px !important;
+          }
+
+          /* 5. הזזת כפתור המידע הצידה והקטנתו */
+          div[title="למידע נוסף על תלוש השכר"] {
+            top: 2px !important;
+            right: 5px !important;
+            transform: scale(0.6) !important;
+          }
+
+          /* 6. הקטנת הדיסקליימר */
+          .disclaimer-text {
+            font-size: 11px !important;
+            line-height: 1.3 !important;
+            padding: 0 10px !important;
+          }
+
+          /* 7. הקטנת הרווח הפנימי של הכרטיסיות הכהות במובייל */
+          .data-card {
+            padding: 20px 14px !important;
           }
           
           #salary-simulator-root {
-            padding: 20px 10px !important; /* מקטין שוליים בטלפון */
+            padding: 15px 10px !important; 
           }
         }
       `}} />
@@ -657,7 +699,7 @@ export default function App() {
         
         <div style={{ width: '100%', maxWidth: '800px', height: '1px', backgroundColor: 'rgba(255, 255, 255, 0.2)', marginTop: '20px', marginBottom: '5px' }}></div>
         
-        <p style={{
+        <p className="disclaimer-text" style={{
           ...fontArial,
           margin: '15px 0 0 0',
           fontSize: '0.95rem',
@@ -673,7 +715,7 @@ export default function App() {
 
       <div className="main-layout" style={{ display: 'grid', gap: '30px', maxWidth: '1000px', margin: '0 auto' }}>
         
-        <div style={{ ...cardStyle, height: 'fit-content' }}>
+        <div className="data-card" style={{ ...cardStyle, height: 'fit-content' }}>
           <CategoryHeader title="הזנת נתונים" />
           
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
@@ -782,7 +824,7 @@ export default function App() {
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
           
-          <div style={cardStyle}>
+          <div className="data-card" style={cardStyle}>
             <CategoryHeader title="היקף משרה" total={norm} />
             
             <div style={listItemStyle}><div style={rowFlex}><span style={labelStyle}>קיצור יום (תקן יום)</span><span style={valStyle}>{dayStandard} ש</span></div></div>
@@ -798,13 +840,13 @@ export default function App() {
             </div>
           </div>
 
-          <div style={cardStyle}>
+          <div className="data-card" style={cardStyle}>
             <CategoryHeader title="שכר למשרה" total={totalBaseSalary} />
             <div style={listItemStyle}><div style={rowFlex}><span style={labelStyle}>4 - שכר משולב</span><span style={valStyle}>{formatCurrency(combinedSalary)}</span></div></div>
             <div style={{...listItemStyle, marginBottom: '0'}}><div style={rowFlex}><span style={labelStyle}>553 - תוספת שקלית</span><span style={valStyle}>{formatCurrency(incremental2024)}</span></div></div>
           </div>
 
-          <div style={cardStyle}>
+          <div className="data-card" style={cardStyle}>
             <CategoryHeader title="תוספות קבועות" total={totalFixedAdditions} />
             {data.management !== 'לא' && (
               <div style={listItemStyle}>
@@ -823,7 +865,7 @@ export default function App() {
             )}
           </div>
 
-          <div style={cardStyle}>
+          <div className="data-card" style={cardStyle}>
             <CategoryHeader title="עבודה נוספת" total={totalAdditionalWork} />
             
             <div style={listItemStyle}>
@@ -893,7 +935,7 @@ export default function App() {
             )}
           </div>
 
-          <div style={cardStyle}>
+          <div className="data-card" style={cardStyle}>
             <CategoryHeader title="החזר הוצאות" total={totalExpenses} />
             <div style={listItemStyle}><div style={rowFlex}><span style={labelStyle}>1201 - נסיעות</span><span style={valStyle}>{formatCurrency(travelExpense)}</span></div></div>
             <div style={{...listItemStyle, marginBottom: '0'}}><div style={rowFlex}><span style={labelStyle}>1285 - השתתפות טלפון</span><span style={valStyle}>{formatCurrency(phoneExpense)}</span></div></div>
