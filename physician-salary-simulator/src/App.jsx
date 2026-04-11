@@ -73,7 +73,7 @@ const CustomSelect = ({ value, onChange, options }) => {
         }}
       >
         <span style={{ flex: 1, textAlign: 'center', fontWeight: 'bold', fontSize: '1.1rem' }}>{displayValue}</span>
-        <span style={{ fontSize: '0.7rem', transition: 'transform 0.2s', transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)' }}>▼</span>
+        <span style={{ fontSize: '0.7rem', transition: 'transform 0.2s', transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)', position: 'relative', left: '-8px' }}>▼</span>
       </div>
       
       {isOpen && (
@@ -101,7 +101,7 @@ const CustomSelect = ({ value, onChange, options }) => {
                 onMouseEnter={() => setHovered(idx)}
                 onMouseLeave={() => setHovered(null)}
                 style={{
-                  padding: '10px 16px',
+                  padding: '4px 16px',
                   textAlign: 'center',
                   cursor: 'pointer',
                   fontWeight: 'bold',
@@ -429,10 +429,10 @@ export default function App() {
   // --- צבעים וסגנונות ---
   const bgMain = '#0e2e38'; 
   const bgCard = '#082129'; 
-  const textPeach = '#e69a88'; 
+  const textPeach = '#f09888'; 
   const textDisclaimer = '#f09888'; 
   const inputBg = '#0e2e38'; 
-  const inputText = '#e69a88'; 
+  const inputText = '#f09888'; 
 
   const fontArial = { fontFamily: '"Arial", "Helvetica Neue", Helvetica, sans-serif' };
 
@@ -629,7 +629,7 @@ export default function App() {
           margin-bottom: 0 !important;
         }
 
-        /* --- התיקון המקיף למובייל --- */
+        /* ---------- התמאה מובייל ---------- */
         @media (max-width: 768px) {
           .main-layout {
             grid-template-columns: 1fr !important;
@@ -660,7 +660,7 @@ export default function App() {
 
           /* 5. הזזת כפתור המידע הצידה והקטנתו */
           div[title="למידע נוסף על תלוש השכר"] {
-            top: 2px !important;
+            top: 0px !important;
             right: 5px !important;
             transform: scale(0.6) !important;
           }
@@ -675,6 +675,11 @@ export default function App() {
           /* 7. הקטנת הרווח הפנימי של הכרטיסיות הכהות במובייל */
           .data-card {
             padding: 20px 14px !important;
+          }
+
+          /* 8. הקטנת הטקסט ספציפית בדרופ-דאון של ניהול מרפאה */
+          #clinic-row .select-wrapper * {
+            font-size: 13px !important;
           }
           
           #salary-simulator-root {
@@ -751,7 +756,7 @@ export default function App() {
               <label style={inputLabelStyle}>משרת אם</label>
               <SegmentedControl value={data.mother} onChange={v => update('mother', v)} options={['לא', 'כן']} />
             </div>
-            <div style={rowFlex}>
+            <div id="clinic-row" style={rowFlex}>
               <label style={inputLabelStyle}>ניהול מרפאה</label>
               <CustomSelect 
                 value={data.management} 
@@ -825,7 +830,7 @@ export default function App() {
         <div style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
           
           <div className="data-card" style={cardStyle}>
-            <CategoryHeader title="היקף משרה" total={norm} />
+            <CategoryHeader title="היקף משרה" />
             
             <div style={listItemStyle}><div style={rowFlex}><span style={labelStyle}>קיצור יום (תקן יום)</span><span style={valStyle}>{dayStandard} ש</span></div></div>
             <div style={listItemStyle}><div style={rowFlex}><span style={labelStyle}>שעות למשרה בשבוע</span><span style={valStyle}>{weeklyHours} ש</span></div></div>
@@ -949,15 +954,21 @@ export default function App() {
         backgroundColor: '#e69a88',
         color: '#082129',
         maxWidth: '1000px',
-        margin: '30px auto 0 auto',
+        margin: '30px auto 20px auto',
         borderRadius: '16px', 
-        padding: '15px 30px', 
+        padding: '4px 20px', 
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        boxSizing: 'border-box'
+        boxSizing: 'border-box',
+        
+        /* --- פקודות הריחוף החדשות --- */
+        position: 'sticky',
+        bottom: '20px',
+        zIndex: 100,
+        boxShadow: '0 -5px 25px rgba(0, 0, 0, 0.3)'
       }}>
-        <h2 style={{ margin: 0, fontSize: '1.6rem', fontWeight: 'bold', color: '#082129' }}>סה"כ תשלומים (ברוטו)</h2>
+        <h2 style={{ margin: 0, fontSize: '1.6rem', fontWeight: 'bold', color: '#082129' }}>סה"כ (ברוטו)</h2>
         <div style={{ fontSize: '1.6rem', fontWeight: 'bold', display: 'flex', alignItems: 'center', direction: 'ltr', color: '#082129' }}>
           <span style={{ marginRight: '8px' }}>₪</span>
           <span>{grossSalary.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
