@@ -569,8 +569,8 @@ export default function App() {
         #salary-simulator-root * {
           font-family: Arial, "Helvetica Neue", Helvetica, sans-serif !important;
         }
-          
-        /* --- התוספת החדשה לשינוי צבע ה-Select All --- */
+
+        /* --- צבע ה-Select All --- */
         ::selection {
           background-color: #e69a88 !important;
           color: #082129 !important;
@@ -579,9 +579,8 @@ export default function App() {
           background-color: #e69a88 !important;
           color: #082129 !important;
         }
-        /* ------------------------------------------- */
-        
-        /* ביטול החצים (Spinners) בשדות מספר */
+
+        /* ביטול החצים בשדות מספר */
         input::-webkit-outer-spin-button,
         input::-webkit-inner-spin-button {
           -webkit-appearance: none;
@@ -603,20 +602,42 @@ export default function App() {
           background: #e69a88;
           border-radius: 10px;
         }
-          /* --- התוספת החדשה לאפקט הריחוף על שדות הזנה --- */
+        
+        /* אפקט ריחוף (Hover) */
         .hover-input {
           transition: all 0.3s ease !important;
+          outline: none !important;
         }
         .hover-input:hover {
-          background-color: #164250 !important; /* צבע מעט בהיר יותר מהרקע הכהה הרגיל */
-          box-shadow: inset 0 0 0 1px rgba(230, 154, 136, 0.4) !important; /* מסגרת אפרסק עדינה שמופיעה מבפנים */
+          background-color: #164250 !important;
+          box-shadow: inset 0 0 0 1px rgba(230, 154, 136, 0.4) !important;
         }
 
-        /* --- אפקט פוקוס (Focus) חדש --- */
+        /* אפקט פוקוס (Focus) */
         .hover-input:focus {
-          background-color: #1c5465 !important; /* רקע עוד יותר בהיר כדי להדגיש בחירה */
-          box-shadow: 0 0 0 2px rgba(230, 154, 136, 0.8) !important; /* מסגרת חיצונית זוהרת בצבע אפרסק */
-          color: #ffffff !important; /* הופך את הטקסט ללבן בזמן הקלדה שיהיה הכי קריא שיש */
+          background-color: #1c5465 !important;
+          box-shadow: 0 0 0 2px rgba(230, 154, 136, 0.8) !important;
+          color: #ffffff !important;
+        }
+
+        /* --- התאמות למובייל (רספונסיביות) --- */
+        .main-layout {
+          grid-template-columns: 1fr 1fr;
+        }
+
+        @media (max-width: 768px) {
+          .main-layout {
+            grid-template-columns: 1fr !important; /* הופך לעמודה אחת */
+          }
+          
+          .hover-input {
+            width: 100% !important; /* מרחיב את השדות לרוחב הטלפון */
+            max-width: 100% !important;
+          }
+          
+          #salary-simulator-root {
+            padding: 20px 10px !important; /* מקטין שוליים בטלפון */
+          }
         }
       `}} />
 
@@ -650,7 +671,7 @@ export default function App() {
         </p>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '30px', maxWidth: '1000px', margin: '0 auto' }}>
+      <div className="main-layout" style={{ display: 'grid', gap: '30px', maxWidth: '1000px', margin: '0 auto' }}>
         
         <div style={{ ...cardStyle, height: 'fit-content' }}>
           <CategoryHeader title="הזנת נתונים" />
