@@ -2,14 +2,52 @@ import React, { useState } from 'react';
 
 // --- רכיבים מותאמים אישית (Custom Components) ---
 
+// רכיב דיסקליימר אחיד לכל האפליקציה
+const Disclaimer = () => (
+  <p className="disclaimer-text" style={{
+    fontFamily: 'Arial, "Helvetica Neue", Helvetica, sans-serif',
+    margin: '15px 0 0 0',
+    fontSize: '0.9rem',
+    fontWeight: 'normal',
+    color: '#D8BFD8',
+    maxWidth: '800px',
+    lineHeight: '1.5',
+    opacity: 0.7
+  }}>
+   יישומון זו הינו כלי עזר פרטי ואינו מוצר רשמי של שירותי בריאות כללית. המידע והחישובים המוצגים בו מבוססים על הערכות ופרשנות אישית של הסכמי השכר, ואין לראות בהם נתונים מחייבים או ייעוץ מקצועי. התוצאות בפועל עשויות להיות שונות. המידע הקובע והרשמי נמצא אך ורק בידי מחלקת משאבי אנוש והשכר בארגון.
+
+  </p>
+);
+
+// רכיב קרדיט אישי בתחתית העמוד
+const FooterCredits = () => (
+  <div style={{ 
+    textAlign: 'center', 
+    padding: '40px 0 20px 0', 
+    opacity: 0.4, 
+    width: '100%'
+  }}>
+    <p style={{ 
+      fontFamily: 'Arial, "Helvetica Neue", Helvetica, sans-serif', 
+      fontSize: '0.8rem', 
+      color: '#D8BFD8', 
+      margin: 0,
+      letterSpacing: '0.5px'
+    }}>
+      {new Date().getFullYear()} Created by Ofer Dahan
+    </p>
+  </div>
+);
+
 // 1. כפתור בחירה מפוצל (Segmented Control) לכן/לא
 const SegmentedControl = ({ value, onChange, options }) => (
   <div 
-    className="hover-input" // <--- הוספת האפקט
+    className="hover-input"
     style={{ 
       display: 'flex', 
-      backgroundColor: '#0e2e38', 
+      backgroundColor: '#1A1A26', 
       borderRadius: '12px', 
+      border: '1px solid rgba(216, 191, 216, 0.5)',
       width: '200px', 
       height: '36px', 
       overflow: 'hidden',
@@ -27,8 +65,8 @@ const SegmentedControl = ({ value, onChange, options }) => (
           alignItems: 'center',
           justifyContent: 'center',
           cursor: 'pointer',
-          backgroundColor: value === opt ? '#e69a88' : 'transparent',
-          color: value === opt ? '#082129' : '#e69a88',
+          backgroundColor: value === opt ? '#9CAF88' : 'transparent',
+          color: value === opt ? '#0D0D12' : '#D8BFD8',
           fontWeight: 'bold',
           fontSize: '1.1rem',
           transition: 'all 0.2s ease',
@@ -55,10 +93,10 @@ const CustomSelect = ({ value, onChange, options }) => {
       
       <div
         onClick={() => setIsOpen(!isOpen)}
-        className="hover-input" // <--- הוספת האפקט
+        className="hover-input"
         style={{
-          backgroundColor: '#0e2e38',
-          color: '#e69a88',
+          backgroundColor: '#1A1A26',
+          color: '#D8BFD8',
           padding: '0 16px',
           borderRadius: '12px',
           cursor: 'pointer',
@@ -66,14 +104,14 @@ const CustomSelect = ({ value, onChange, options }) => {
           justifyContent: 'space-between',
           alignItems: 'center',
           boxSizing: 'border-box',
-          border: isOpen ? '1px solid rgba(230, 154, 136, 0.5)' : '1px solid transparent',
+          border: isOpen ? '1px solid #9CAF88' : '1px solid rgba(216, 191, 216, 0.5)',
           transition: 'all 0.3s ease',
           width: '100%',
           height: '100%' 
         }}
       >
         <span style={{ flex: 1, textAlign: 'center', fontWeight: 'bold', fontSize: '1.1rem' }}>{displayValue}</span>
-        <span style={{ fontSize: '0.7rem', transition: 'transform 0.2s', transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)', position: 'relative', left: '-8px' }}>▼</span>
+        <span style={{ fontSize: '0.7rem', transition: 'transform 0.2s', transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)', position: 'relative', right: '5px' }}>▼</span>
       </div>
       
       {isOpen && (
@@ -82,8 +120,8 @@ const CustomSelect = ({ value, onChange, options }) => {
           top: 'calc(100% + 5px)',
           left: 0,
           right: 0,
-          backgroundColor: '#082129',
-          border: '1px solid rgba(230, 154, 136, 0.4)',
+          backgroundColor: '#15151E',
+          border: '1px solid #9CAF88',
           borderRadius: '16px',
           overflow: 'hidden',
           zIndex: 10,
@@ -106,8 +144,8 @@ const CustomSelect = ({ value, onChange, options }) => {
                   cursor: 'pointer',
                   fontWeight: 'bold',
                   fontSize: '1.1rem',
-                  color: hovered === idx ? '#082129' : '#e69a88',
-                  backgroundColor: hovered === idx ? '#e69a88' : 'transparent',
+                  color: hovered === idx ? '#0D0D12' : '#D8BFD8',
+                  backgroundColor: hovered === idx ? '#9CAF88' : 'transparent',
                   transition: 'all 0.1s ease'
                 }}
               >
@@ -121,56 +159,101 @@ const CustomSelect = ({ value, onChange, options }) => {
   );
 };
 
-// 3. כפתור מידע מעוצב (Info Button) ב-SVG ידני
-const InfoButton = () => {
+// 3. כפתור מידע נוסף
+const InfoButton = ({ onClick }) => {
   const [isHovered, setIsHovered] = useState(false);
-
   return (
     <div 
       style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        position: 'absolute', 
-        top: '40px',
-        right: '40px',
-        cursor: 'pointer',
-        transform: isHovered ? 'scale(1.05)' : 'scale(1)', 
-        transition: 'transform 0.3s ease'
+        display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+        cursor: 'pointer', width: 'fit-content',
+        transition: 'all 0.3s ease',
+        transform: isHovered ? 'scale(1.15)' : 'scale(1)' /* אפקט ההגדלה בריחוף */
       }}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      onClick={() => window.open('https://your-link-here.com', '_blank')} 
-      title="למידע נוסף על תלוש השכר"
+      onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}
+      onClick={onClick}
     >
-      <svg 
-        width="44" 
-        height="44" 
-        viewBox="0 0 24 24" 
-        fill={isHovered ? '#ffffff' : '#f09888'} 
-        xmlns="http://www.w3.org/2000/svg"
-        style={{ transition: 'fill 0.3s ease' }}
-      >
-        <circle cx="12" cy="12" r="12" />
-        <path d="M12 17V11" stroke="#012733" strokeWidth="2.5" strokeLinecap="round" />
-        <circle cx="12" cy="7.5" r="1.5" fill="#012733" />
-      </svg>
-      <span style={{ 
-        fontFamily: 'Arial, sans-serif', 
-        fontSize: '0.85rem', 
-        color: isHovered ? '#ffffff' : '#f09888', 
-        marginTop: '0px',
-        transition: 'color 0.3s ease'
+      <div style={{
+        width: '50px', height: '50px', borderRadius: '50%',
+        border: 'none', 
+        display: 'flex', justifyContent: 'center', alignItems: 'center',
+        backgroundColor: isHovered ? '#ffffff' : '#9CAF88', 
+        transition: 'all 0.3s ease',
+        boxShadow: isHovered ? '0 4px 12px rgba(0,0,0,0.3)' : '0 2px 6px rgba(0,0,0,0.2)'
       }}>
-        מידע נוסף
-      </span>
+        {/* שימוש ב-SVG כדי לשלוט על אורך הקו של ה-i */}
+        <svg 
+          width="20" height="34" /* מידות האייקון בתוך העיגול */
+          viewBox="0 0 100 180" /* הגדרת מרחב הציור */
+          fill="none" 
+          stroke="#0D0D12" /* האייקון נשאר שחור תמיד */
+          strokeWidth="25" /* עובי הקו */
+          strokeLinecap="round" /* קצוות מעוגלים */
+          style={{ transition: 'all 0.3s ease' }} 
+        >
+          {/* הנקודה של ה-i */}
+          <circle cx="50" cy="30" r="15" fill="#0D0D12" stroke="none" />
+          {/* הגזע הראשי של ה-i, מוארך כלפי מטה */}
+          <path d="M50 75 L50 160" />
+        </svg>
+      </div>
     </div>
   );
 };
 
+// 4. כפתור חזרה לסימולטור
+const BackButton = ({ onClick }) => {
+  const [isHovered, setIsHovered] = useState(false);
+  return (
+    <div 
+      style={{
+        display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+        cursor: 'pointer', width: 'fit-content'
+      }}
+      onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}
+      onClick={onClick}
+    >
+      <div style={{
+        width: '50px', height: '50px', borderRadius: '50%', /* הגדלנו את העיגול ל-50px */
+        border: 'none', 
+        display: 'flex', justifyContent: 'center', alignItems: 'center',
+        backgroundColor: isHovered ? '#ffffff' : '#9CAF88', 
+        transition: 'all 0.3s ease',
+        boxShadow: isHovered ? '0 4px 12px rgba(0,0,0,0.3)' : '0 2px 6px rgba(0,0,0,0.2)',
+        transform: isHovered ? 'scale(1.15)' : 'scale(1)' 
+      }}>
+        <svg 
+          width="30" height="30" /* הגדלנו את האייקון מ-26 ל-30 */
+          viewBox="0 0 24 24" fill="none" 
+          stroke="#0D0D12" 
+          strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+          style={{ transition: 'all 0.3s ease' }} 
+        >
+          <rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect>
+          <line x1="8" y1="6" x2="16" y2="6"></line>
+          <line x1="16" y1="14" x2="16.01" y2="14"></line>
+          <line x1="12" y1="14" x2="12.01" y2="14"></line>
+          <line x1="8" y1="14" x2="8.01" y2="14"></line>
+          <line x1="16" y1="18" x2="16.01" y2="18"></line>
+          <line x1="12" y1="18" x2="12.01" y2="18"></line>
+          <line x1="8" y1="18" x2="8.01" y2="18"></line>
+          <line x1="16" y1="10" x2="16.01" y2="10"></line>
+          <line x1="12" y1="10" x2="12.01" y2="10"></line>
+          <line x1="8" y1="10" x2="8.01" y2="10"></line>
+        </svg>
+      </div>
+    </div>
+  );
+};
 
 export default function App() {
+  
+  // --- מתג המסכים - סימולטור / מידע נוסף
+  const [currentView, setCurrentView] = useState('simulator');
+
+  // שומר את הרכיב שהמשתמש לחץ עליו כדי להציג בחלון הצף
+  const [selectedInfo, setSelectedInfo] = useState(null);
+
   // --- 1. כל נתוני הקלט (עם ערכי ברירת המחדל) ---
   const [data, setData] = useState({
     age: 40.2, 
@@ -180,6 +263,7 @@ export default function App() {
     management: 'לא',
     mother: 'לא',
     community: 'לא',
+    jobPercentage: '100%',
     accompanying: 'לא',
     weightedSouls: 0, 
     elderlyCount: 0,  
@@ -426,13 +510,13 @@ export default function App() {
     );
   };
 
-  // --- צבעים וסגנונות ---
-  const bgMain = '#0e2e38'; 
-  const bgCard = '#082129'; 
-  const textPeach = '#f09888'; 
-  const textDisclaimer = '#f09888'; 
-  const inputBg = '#0e2e38'; 
-  const inputText = '#f09888'; 
+  // --- צבעים וסגנונות (הפלטה החדשה) ---
+  const bgMain = '#0D0D12'; 
+  const bgCard = '#1c1b29'; 
+  const textLilac = '#D8BFD8'; 
+  const textSage = '#9CAF88'; 
+  const inputBg = '#1c1b29'; 
+  const inputText = '#D8BFD8'; 
 
   const fontArial = { fontFamily: '"Arial", "Helvetica Neue", Helvetica, sans-serif' };
 
@@ -442,15 +526,15 @@ export default function App() {
     padding: '40px 20px',
     backgroundColor: bgMain,
     minHeight: '100vh',
-    color: textPeach,
+    color: textLilac,
     position: 'relative' 
   };
 
   const cardStyle = { 
     backgroundColor: bgCard, 
-    padding: '20px 30px 30px',
+    padding: '20px 30px 0px',
     borderRadius: '24px', 
-    border: `1px solid rgba(240, 152, 136, 0.25)`, 
+    border: `1px solid rgba(216, 191, 216, 0.15)`, 
     display: 'flex',
     flexDirection: 'column',
     height: 'fit-content'
@@ -462,23 +546,37 @@ export default function App() {
     alignItems: 'center'
   };
 
+  // --- הקוד החדש של כותרת האזורים ---
   const CategoryHeader = ({ title, total }) => (
-    <div style={{
-      margin: '-20px -30px 20px -30px', 
-      padding: '12px 30px 8px 30px',
-      borderBottom: `8px solid ${bgMain}`, 
+    <div className="category-header" style={{
+      margin: '-20px -30px 0px -30px', 
+      padding: '10px 20px', 
+      backgroundColor: textSage, 
       borderTopLeftRadius: '24px', 
       borderTopRightRadius: '24px',
+      borderBottom: '2px solid #000000', /* <--- הוספנו את פס ההפרדה השחור כאן */
       display: 'flex',
       justifyContent: 'space-between',
-      alignItems: 'baseline'
+      alignItems: 'center' 
     }}>
-      <h3 style={{ ...fontArial, color: '#ffffff', fontSize: '1.5rem', fontWeight: 'bold', margin: 0 }}>
+
+      {/* --- שליטה בגודל הטקסט של הכותרת (למשל "היקף משרה") --- */}
+      <h3 style={{ ...fontArial, color: '#0D0D12', fontSize: '1.5rem', fontWeight: 'bold', margin: 0 }}>
         {title}
       </h3>
+      
       {total !== undefined && (
-        <div style={{ ...fontArial, fontSize: '1.1rem', color: '#ffffff', fontWeight: 'bold' }}>
-          <span>סה"כ </span>
+        <div style={{ 
+          ...fontArial, 
+          /* --- שליטה בגודל הטקסט של המספר (סכום הסה"כ) --- */
+          fontSize: '1.2rem', 
+          color: '#000000', 
+          fontWeight: 'bold', 
+          display: 'flex',
+          alignItems: 'center'
+        }}>
+          {/* --- שליטה בגודל הטקסט של המילה "סה"כ" --- */}
+          <span style={{ color: '#000000', marginLeft: '8px', fontSize: '1.2rem' }}>סה"כ </span>
           {formatCurrency(total)}
         </div>
       )}
@@ -489,15 +587,17 @@ export default function App() {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    backgroundColor: bgMain, 
-    borderRadius: '12px', 
-    padding: '6px 16px', 
-    marginBottom: '16px' 
+    backgroundColor: bgCard,
+    borderRadius: '0px', 
+    marginBottom: '0px',
+    borderBottom: '2px solid #000000',
+    margin: '0 var(--edge-margin)', 
+    padding: '12px var(--edge-padding)' 
   };
 
   const inputLabelStyle = {
     ...fontArial,
-    color: textPeach,
+    color: textLilac,
     fontSize: '1.1rem',
     fontWeight: 'bold',
     textAlign: 'right'
@@ -507,7 +607,7 @@ export default function App() {
     ...fontArial,
     fontSize: '0.85rem',
     fontWeight: 'normal',
-    color: textPeach,
+    color: textLilac,
     opacity: 0.8,
     textAlign: 'right',
     marginTop: '0px'
@@ -515,14 +615,14 @@ export default function App() {
 
   const labelStyle = {
     ...fontArial,
-    color: textPeach,
+    color: textLilac,
     fontSize: '1.1rem',
     fontWeight: 'bold'
   };
 
   const valStyle = {
     ...fontArial,
-    color: textPeach,
+    color: textLilac,
     fontSize: '1.1rem',
     fontWeight: 'bold'
   };
@@ -533,7 +633,7 @@ export default function App() {
     color: inputText,
     padding: '0 16px', 
     borderRadius: '12px',
-    border: 'none', 
+    border: '1px solid rgba(216, 191, 216, 0.5)',
     width: '200px', 
     height: '36px',
     textAlign: 'center',
@@ -547,7 +647,7 @@ export default function App() {
     ...fontArial,
     fontSize: '0.85rem', 
     fontWeight: 'normal',  
-    color: textPeach, 
+    color: textLilac, 
     opacity: 0.8,
     marginTop: '2px', 
     lineHeight: '1.2',
@@ -555,29 +655,282 @@ export default function App() {
   };
 
   const highlightStyle = {
-    backgroundColor: textPeach, 
+    backgroundColor: textLilac, 
     borderRadius: '12px',
     padding: '6px 16px',
     marginTop: '8px',
     border: 'none'
   };
 
+  // --- מאגר המידע של רכיבי השכר ---
+  const infoData = [
+    {
+      category: "נתוני בסיס",
+      items: [
+        { 
+          title: "דרגה", 
+          description: (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+              <div>פירוט אופן קביעת הדרגה</div>
+              
+              {/* הטבלה של מסלולי הקידום והדרגות */}
+              <div style={{ marginTop: '10px', overflowX: 'auto', paddingBottom: '10px' }}>
+                <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'right', fontSize: '0.75rem', border: '1px solid rgba(216, 191, 216, 0.3)', minWidth: '600px' }}>
+                  <thead>
+                    <tr style={{ backgroundColor: '#9CAF88', color: '#1A1A26' }}>
+                      <th style={{ padding: '8px', border: '1px solid #1A1A26', width: '35%' }}>תואר / תפקיד</th>
+                      <th style={{ padding: '8px', border: '1px solid #1A1A26', width: '65%' }}>הסבר</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td style={{ padding: '8px', border: '1px solid rgba(216, 191, 216, 0.3)', fontWeight: 'bold' }}>סטאז'ר</td>
+                      <td style={{ padding: '8px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>דרגה 1</td>
+                    </tr>
+                    <tr style={{ backgroundColor: '#252435' }}>
+                      <td style={{ padding: '8px', border: '1px solid rgba(216, 191, 216, 0.3)', fontWeight: 'bold' }}>מתמחה ברפואת המשפחה</td>
+                      <td style={{ padding: '8px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>דרגה 2 מתחילת ההתמחות. לאחר שנה עולה לדרגה 3. לאחר 3 שנים נוספות עולה לדרגה 3+.</td>
+                    </tr>
+                    <tr>
+                      <td style={{ padding: '8px', border: '1px solid rgba(216, 191, 216, 0.3)', fontWeight: 'bold' }}>רופא ללא תעודת מומחה</td>
+                      <td style={{ padding: '12px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>מתחיל בדרגה 3. לאחר שנתיים עולה לדרגה 4. לאחר שנתיים נוספות עולה לדרגה 5. לאחר 4 שנים נוספות עולה לדרגה 6. לאחר 3 שנים נוספות עולה לדרגה 6+.</td>
+                    </tr>
+                    <tr style={{ backgroundColor: '#252435' }}>
+                      <td style={{ padding: '8px', border: '1px solid rgba(216, 191, 216, 0.3)', fontWeight: 'bold' }}>רופא בעל תעודת מומחה</td>
+                      <td style={{ padding: '8px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>מתחיל בדרגה 4. לאחר שנה עולה לדרגה 5. לאחר שנתיים נוספות עולה לדרגה 6. לאחר 3 שנים נוספות עולה לדרגה 7. לאחר 3 שנים נוספות עולה לדרגה 7+.</td>
+                    </tr>
+                    <tr>
+                      <td style={{ padding: '8px', border: '1px solid rgba(216, 191, 216, 0.3)', fontWeight: 'bold' }}>רופא אזורי/ מנהל מרפאה ללא תעודת מומחה</td>
+                      <td style={{ padding: '8px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>קידום כמו לרופא בעל תעודת מומחה. בכל מקרה לא תהא דרגתו נמוכה מדרגת רופא הכפוף אליו.</td>
+                    </tr>
+                    <tr style={{ backgroundColor: '#252435' }}>
+                      <td style={{ padding: '8px', border: '1px solid rgba(216, 191, 216, 0.3)', fontWeight: 'bold' }}>רופא אזורי/ מנהל מרפאה בעל תעודת מומחה</td>
+                      <td style={{ padding: '8px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>מתחיל בדרגה 7. לאחר 3 שנים עולה לדרגה 8. לאחר 3 שנים נוספות עולה לדרגה 8+. בכל מקרה לא תהא דרגתו נמוכה מדרגת רופא הכפוף אליו.</td>
+                    </tr>
+                    <tr>
+                      <td style={{ padding: '8px', border: '1px solid rgba(216, 191, 216, 0.3)', fontWeight: 'bold' }}>סגן מנהל רפואי במחוז ורופא אחראי במינהלה האזורית</td>
+                      <td style={{ padding: '8px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>מתחיל בדרגה 7. לאחר שנתיים עולה לדרגה 8. לאחר 3 שנים נוספות עולה לדרגה 9. לאחר 3 שנים נוספות עולה לדרגה 9+.</td>
+                    </tr>
+                    <tr style={{ backgroundColor: '#252435' }}>
+                      <td style={{ padding: '8px', border: '1px solid rgba(216, 191, 216, 0.3)', fontWeight: 'bold' }}>מנהל רפואי במחוז</td>
+                      <td style={{ padding: '8px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>אחרי 3 שנים בתפקיד עולה לדרגה 10. לאחר 3 שנים נוספות עולה לדרגה 10+.</td>
+                    </tr>
+                    <tr>
+                      <td style={{ padding: '8px', border: '1px solid rgba(216, 191, 216, 0.3)', fontWeight: 'bold' }}>מנהל המחוז</td>
+                      <td style={{ padding: '8px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>מתחיל בדרגה 9. לאחר שנתיים עולה לדרגה 10. לאחר 3 שנים נוספות עולה לדרגה 11. לאחר 3 שנים נוספות עולה לדרגה 11+.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )
+        },
+        {
+          title: "היקף משרה ונורמת נפשות", 
+          description: (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+              <div>פירוט שעות העבודה ונורמת הנפשות בהתאם לגיל, ותק ותפקיד:</div>
+              
+              {/* עוטף שמאפשר גלילה אופקית לטבלה הרחבה */}
+              <div style={{ marginTop: '10px', overflowX: 'auto', paddingBottom: '10px' }}>
+                <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'center', fontSize: '0.75rem', border: '1px solid rgba(216, 191, 216, 0.3)', minWidth: '1200px' }}>
+                  <thead>
+                    <tr style={{ backgroundColor: '#9CAF88', color: '#1A1A26' }}>
+                      <th style={{ padding: '5px', border: '1px solid #1A1A26' }}>קריטריון</th>
+                      <th style={{ padding: '5px', border: '1px solid #1A1A26' }}>שעות למשרה בשבוע</th>
+                      <th style={{ padding: '5px', border: '1px solid #1A1A26' }}>קיצור יום (תקן יום)</th>
+                      <th style={{ padding: '5px', border: '1px solid #1A1A26' }}>שעות תקן</th>
+                      <th style={{ padding: '5px', border: '1px solid #1A1A26' }}>שעות פרונטליות</th>
+                      <th style={{ padding: '5px', border: '1px solid #1A1A26' }}>שעות לא פרונטליות</th>
+                      <th style={{ padding: '5px', border: '1px solid #1A1A26' }}>השתלמות עצמית</th>
+                      <th style={{ padding: '5px', border: '1px solid #1A1A26' }}>נורמת נפשות ללא ניהול</th>
+                      <th style={{ padding: '5px', border: '1px solid #1A1A26' }}>נ"נ מנהל שירות</th>
+                      <th style={{ padding: '5px', border: '1px solid #1A1A26' }}>נ"נ מנהל מ.קטנה</th>
+                      <th style={{ padding: '5px', border: '1px solid #1A1A26' }}>נ"נ מנהל מ.בינונית</th>
+                      <th style={{ padding: '5px', border: '1px solid #1A1A26' }}>נ"נ מנהל מ.גדולה</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)', textAlign: 'right' }}>עד גיל 40</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>42</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>7.5</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>182</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>35</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>4.5</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>2.5</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>1,345</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>1,321</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>1,224</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>1,199</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>1,149</td>
+                    </tr>
+                    <tr style={{ backgroundColor: '#252435' }}>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)', textAlign: 'right' }}>+40 עם ותק 0-2 שנים</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>42</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>7.5</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>182</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>35</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>4.5</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>2.5</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>1,345</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>1,321</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>1,224</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>1,199</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>1,149</td>
+                    </tr>
+                    <tr>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)', textAlign: 'right' }}>משרת אם בכל גיל עם ותק 0-2 שנים</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>40</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>7</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>173</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>34</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>3.5</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>2.5</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>1,242</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>1,217</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>1,127</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>1,102</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>1,052</td>
+                    </tr>
+                    <tr style={{ backgroundColor: '#252435' }}>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)', textAlign: 'right' }}>+40 עם ותק 2-5 שנים</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>40</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>7</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>173</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>34</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>3.5</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>2.5</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>1,242</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>1,217</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>1,127</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>1,102</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>1,052</td>
+                    </tr>
+                    <tr>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)', textAlign: 'right' }}>+40 עם ותק +5 שנים</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>37.5</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>6.5</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>162</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>34</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>1.5</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>2</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>1,210</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>1,186</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>1,095</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>1,070</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>1,020</td>
+                    </tr>
+                    <tr style={{ backgroundColor: '#252435' }}>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)', textAlign: 'right' }}>+50 עם ותק +5 שנים</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>35</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>6</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>152</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>32</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>1.5</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>1.5</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>1,107</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>1,082</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>997</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>972</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>923</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )
+        }
+      ]
+    },
+    {
+      category: "תוספות קבועות",
+      items: [
+        { 
+          title: "תוספת ניהול מרפאה", 
+          description: (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+              <div>ניהול מרפאה מקנה מספר הטבות:</div>
+              <ol style={{ paddingRight: '20px', margin: 0 }}>
+                <li style={{ marginBottom: '10px' }}>תוספת קבועה לשכר (1129 - רופא אזורי) הנקבעת בהתאם לגודל המרפאה ומרכיב אישי משתנה בשם "ערך יום".</li>
+                <li style={{ marginBottom: '10px' }}>הפחתת נורמת הנפשות (ראה טבלה ברכיב "היקף משרה").</li>
+                <li>"שעות ניהול" - מנהל מרפאה מקבל זמן במהלך היום עבודה המוקדש לעבודת הניהול. זמן זה יורד מהשעות הפרונטליות, כך שבפועל יש למנהלי מרפאות פחות שעות קבלת קהל.</li>
+              </ol>
+              
+              {/* --- הטבלה --- */}
+              <div style={{ marginTop: '10px', overflowX: 'auto' }}>
+                <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'center', fontSize: '0.75rem', border: '1px solid rgba(216, 191, 216, 0.3)' }}>
+                  <thead>
+                    <tr style={{ backgroundColor: '#9CAF88', color: '#1A1A26' }}>
+                      <th style={{ padding: '5px', border: '1px solid #1A1A26' }}>גודל מרפאה</th>
+                      <th style={{ padding: '5px', border: '1px solid #1A1A26' }}>מספר משרות רופא</th>
+                      <th style={{ padding: '5px', border: '1px solid #1A1A26' }}>מספר כוננויות</th>
+                      <th style={{ padding: '5px', border: '1px solid #1A1A26' }}>שעות ניהול</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>מנהל שירות</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>2-2.99</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>8</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>1</td>
+                    </tr>
+                    <tr style={{ backgroundColor: '#252435' }}>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>מרפאה קטנה</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>3-3.99</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>16</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>3</td>
+                    </tr>
+                    <tr>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>מרפאה בינונית</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>4-7.99</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>18</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>4</td>
+                    </tr>
+                    <tr style={{ backgroundColor: '#252435' }}>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>מרפאה גדולה</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>8 ומעלה</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>24</td>
+                      <td style={{ padding: '5px', border: '1px solid rgba(216, 191, 216, 0.3)' }}>6</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )
+        },
+      ]
+    },
+    {
+      category: "עבודה נוספת",
+      items: [
+        { 
+          title: "הסכם קהילה", 
+          description: "רופא (גם מתמחה משלב ב') יכול להצטרף להסכם קהילה בתנאי שהוא עובד בהיקף של חצי משרה ומעלה.\nחתימה על הסכם קהילה מגדילה את התעריף המשולם לנפש מעל הנורמה (1120 - נפשות עיר) וכן לנפשות מעל גיל 65 (סמל 832).\n\nחתימה על הסכם קהילה מחייבת הוספת שעות פרונטליות (קבלת קהל) נוספות.\nעד 400 נפשות מעל הנורמה נדרש להוסיף 2 שעות.\nכל 150 נפשות נוספות (מהנפש הראשונה) נדרש להוסיף עוד שעה." 
+        },
+      ]
+    },
+  ];
+
   return (
     <div id="salary-simulator-root" style={mainWrapperStyle}>
       
       <style dangerouslySetInnerHTML={{__html: `
-        #salary-simulator-root,
+        #salary-simulator-root {
+          --edge-margin: -30px;
+          --edge-padding: 30px;
+        }
         #salary-simulator-root * {
           font-family: Arial, "Helvetica Neue", Helvetica, sans-serif !important;
         }
 
         ::selection {
-          background-color: #e69a88 !important;
-          color: #082129 !important;
+          background-color: #9CAF88 !important;
+          color: #0D0D12 !important;
         }
         ::-moz-selection {
-          background-color: #e69a88 !important;
-          color: #082129 !important;
+          background-color: #9CAF88 !important;
+          color: #0D0D12 !important;
         }
 
         input::-webkit-outer-spin-button,
@@ -593,11 +946,11 @@ export default function App() {
           width: 6px;
         }
         ::-webkit-scrollbar-track {
-          background: #082129;
+          background: #000000;
           border-radius: 10px;
         }
         ::-webkit-scrollbar-thumb {
-          background: #e69a88;
+          background: #9CAF88;
           border-radius: 10px;
         }
         
@@ -606,13 +959,13 @@ export default function App() {
           outline: none !important;
         }
         .hover-input:hover {
-          background-color: #164250 !important;
-          box-shadow: inset 0 0 0 1px rgba(230, 154, 136, 0.4) !important;
+          background-color: #333247 !important;
+          box-shadow: inset 0 0 0 1px #D8BFD8 !important;
         }
 
         .hover-input:focus {
-          background-color: #1c5465 !important;
-          box-shadow: 0 0 0 2px rgba(230, 154, 136, 0.8) !important;
+          background-color: #333247 !important;
+          box-shadow: 0 0 0 1px #9CAF88 !important;
           color: #ffffff !important;
         }
 
@@ -625,19 +978,59 @@ export default function App() {
           flex: 0 0 auto !important;
         }
 
-        .data-card > div:last-child {
+       .data-card > div:last-child {
           margin-bottom: 0 !important;
+          border-bottom: none !important;
+          border-bottom-right-radius: 24px !important;
+          border-bottom-left-radius: 24px !important;
         }
+
+        /* אפקט ריחוף ייחודי לשורות במסך המידע */
+        .info-item-button:hover {
+          background-color: rgba(156, 175, 136, 0.1) !important; /* הארה עדינה בירוק מרווה */
+        }
+
+        /* מוודא שהטקסט נשאר ברור בריחוף */
+        .info-item-button:hover span {
+          color: #ffffff !important;
+        }
+
+        /* הגדרת האנימציה החדשה למשולש (תזוזה שמאלה וחזרה) */
+        @keyframes slideLeftRight {
+          0%, 100% { transform: translateX(0); }
+          50% { transform: translateX(-6px); } /* זז 6 פיקסלים שמאלה */
+        }
+
+        /* הפעלת האנימציה על המשולש רק כשמרחפים על השורה */
+        .info-item-button:hover .animated-arrow {
+          animation: slideLeftRight 0.8s ease-in-out infinite;
+        }
+
+        /* פסי הפרדה שחורים ורווחים לאזור הזנת הנתונים מקצה לקצה */
+        .inputs-list > div {
+          margin: 0 var(--edge-margin) !important;
+          padding: 10px var(--edge-padding) !important;
+        }
+        .inputs-list > div:not(:last-child) {
+          border-bottom: 2px solid #000000;
+        }
+
 
         /* ---------- התמאה מובייל ---------- */
         @media (max-width: 768px) {
-          .main-layout {
-            grid-template-columns: 1fr !important;
+          .main-layout { 
+            grid-template-columns: 1fr !important; 
+            gap: 40px !important; 
           }
           
+          #salary-simulator-root {
+            --edge-margin: -14px;
+            --edge-padding: 14px;
+          }
+
           /* 1. הקטנת הפונט הכללי של האפליקציה (תוויות, טקסטים) */
           #salary-simulator-root {
-            font-size: 12px !important; /* ברירת המחדל היא בדרך כלל 16 */
+            font-size: 12px !important; 
             padding: 15px 10px !important; 
           }
 
@@ -645,12 +1038,18 @@ export default function App() {
           .hover-input , .select-wrapper {
             width: 140px !important; 
             max-width: 55vw !important;
-            font-size: 18px !important; /* מקטין את המספרים שמוקלדים */
+            font-size: 18px !important; 
           }
           
+          /* מחריגים את שורות המידע מהגבלת הרוחב של שדות ההזנה במובייל */
+          .info-item-button {
+            width: auto !important;
+            max-width: none !important;
+          }
+
           /* 3. הקטנת הכותרת הראשית */
           h1 {
-            font-size: 1.8rem !important; /* הקטנתי מ-2.1 ל-1.8 */
+            font-size: 2.0rem !important; 
           }
 
           /* 4. הקטנת כותרות משניות (כמו "נתוני בסיס", "תוספות קבועות") */
@@ -658,11 +1057,10 @@ export default function App() {
             font-size: 20px !important;
           }
 
-          /* 5. הזזת כפתור המידע הצידה והקטנתו */
-          div[title="למידע נוסף על תלוש השכר"] {
-            top: 0px !important;
-            right: 5px !important;
-            transform: scale(0.6) !important;
+          /* הקטנת כפתורי הפינה במובייל */
+          .corner-action-btn {
+            transform: scale(0.65); /* מכווץ את הכפתור ל-75% מגודלו */
+            transform-origin: top right; /* שומר אותו צמוד בדיוק לפינה הימנית העליונה */
           }
 
           /* 6. הקטנת הדיסקליימר */
@@ -674,7 +1072,13 @@ export default function App() {
 
           /* 7. הקטנת הרווח הפנימי של הכרטיסיות הכהות במובייל */
           .data-card {
-            padding: 20px 14px !important;
+            padding: 20px 14px 0px !important;
+          }
+          
+            /* רוחב החלק העליון של הכרטיסיות */
+          .category-header {
+            margin: -20px -14px 0px -14px !important;
+            padding: 6px 14px !important;
           }
 
           /* 8. הקטנת הטקסט ספציפית בדרופ-דאון של ניהול מרפאה */
@@ -682,48 +1086,78 @@ export default function App() {
             font-size: 13px !important;
           }
           
+          /* הקטנת הרווח בין הכותרות במובייל */
+          .main-title-wrapper {
+            margin-bottom: 15px !important;
+          }
+
+          /* הזזת אזור הכותרות למטה וצמצום הרווח מהכרטיסיות במובייל */
+          .header-container {
+            margin-top: 25px !important;   /* זהו הרווח מהקצה העליון של המסך */
+            margin-bottom: 20px !important; /* זהו הרווח לכיוון הכרטיסיות */
+          }
+
+         /* צמצום הרווחים סביב קו ההפרדה במובייל */
+          .title-divider {
+            margin-top: 10px !important;    /* רווח מעל הקו */
+            margin-bottom: 0px !important; /* צמצום הרווח מתחת לקו */
+          }
+
           #salary-simulator-root {
             padding: 15px 10px !important; 
           }
         }
+
+        /* --- אנימציות לחלון הצף --- */
+        @keyframes fadeInOverlay {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+
+        @keyframes slideUpModal {
+          from { 
+            opacity: 0; 
+            transform: translateY(30px); 
+          }
+          to { 
+            opacity: 1; 
+            transform: translateY(0); 
+          }
+        }
       `}} />
 
-      <InfoButton />
-      
-      <div style={{ textAlign: 'center', marginBottom: '50px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '15px' }}>
-          <h1 style={{ ...fontArial, margin: 0, fontSize: '2.8rem', fontWeight: 'bold', letterSpacing: '-0.5px', color: '#ffffff' }}>
-            סימולטור שכר
-          </h1>
-        </div>
+      {/* ================= מסך הסימולטור ================= */}
+      {currentView === 'simulator' && (
+        <>
+          {/* מיכל הכותרת (מוגדר כ-relative כדי לאפשר לכפתור לצוף בתוכו) */}
+          <div className="header-container" style={{ position: 'relative', textAlign: 'center', marginBottom: '50px', display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
+            
+            {/* הכפתור צף בפינה הימנית העליונה */}
+            <div className="corner-action-btn" style={{ position: 'absolute', top: '0', right: '0' }}>
+              <InfoButton onClick={() => setCurrentView('info')} />
+            </div>
+            
+            <div className="main-title-wrapper" style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '15px' }}>
+              <h1 style={{ ...fontArial, margin: 0, fontSize: '2.8rem', fontWeight: 'bold', letterSpacing: '-0.5px', color: '#ffffff' }}>
+                סימולטור שכר
+              </h1>
+            </div>
 
-        <h2 style={{ ...fontArial, margin: '0', fontSize: '1.4rem', fontWeight: 'bold', color: textPeach, opacity: 0.9 }}>
-          רופאי משפחה בקופ"ח כללית
-        </h2>
-        
-        <div style={{ width: '100%', maxWidth: '800px', height: '1px', backgroundColor: 'rgba(255, 255, 255, 0.2)', marginTop: '20px', marginBottom: '5px' }}></div>
-        
-        <p className="disclaimer-text" style={{
-          ...fontArial,
-          margin: '15px 0 0 0',
-          fontSize: '0.95rem',
-          fontWeight: 'normal',
-          color: textDisclaimer,
-          maxWidth: '800px',
-          lineHeight: '1.5',
-          opacity: 0.9
-        }}>
-          סימולטור זה הינו כלי עזר פרטי ואינו מוצר רשמי של שירותי בריאות כללית. החישובים המוצגים בו מבוססים על הערכות ופרשנות אישית של הסכמי השכר, ואין לראות בהם נתונים מחייבים או ייעוץ מקצועי. התוצאות עשויות להיות שונות מהשכר בפועל. המידע הקובע והרשמי נמצא אך ורק בידי מחלקת משאבי אנוש והשכר בארגון.
-        </p>
-      </div>
-
+            <h2 style={{ ...fontArial, margin: '0', fontSize: '1.4rem', fontWeight: 'bold', color: textSage, opacity: 0.9 }}>
+              רופאי משפחה בקופ"ח כללית
+            </h2>
+            
+            <div className="title-divider" style={{ width: '100%', maxWidth: '800px', height: '1px', backgroundColor: 'rgba(216, 191, 216, 0.2)', marginTop: '20px', marginBottom: '5px' }}></div>
+            
+            <Disclaimer />
+          </div>
+          
       <div className="main-layout" style={{ display: 'grid', gap: '30px', maxWidth: '1000px', margin: '0 auto' }}>
         
         <div className="data-card" style={{ ...cardStyle, height: 'fit-content' }}>
           <CategoryHeader title="הזנת נתונים" />
           
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          <div className="inputs-list" style={{ display: 'flex', flexDirection: 'column' }}>
             <div style={rowFlex}>
               <label style={inputLabelStyle}>גיל</label>
               <input className="hover-input" type="number" step="0.1" value={data.age} onChange={e => update('age', e.target.value)} onFocus={e => e.target.select()} style={inputFieldStyle} />
@@ -742,19 +1176,24 @@ export default function App() {
             </div>
             
             <div style={rowFlex}>
+              <label style={inputLabelStyle}>חלקיות משרה</label>
+              <CustomSelect value={data.jobPercentage} onChange={v => update('jobPercentage', v)} options={['100%']} />
+            </div>
+
+            <div style={rowFlex}>
               <label style={inputLabelStyle}>הסכם קהילה</label>
-              <SegmentedControl value={data.community} onChange={v => update('community', v)} options={['לא', 'כן']} />
+              <SegmentedControl value={data.community} onChange={v => update('community', v)} options={['כן', 'לא']} />
             </div>
             <div style={rowFlex}>
               <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'right' }}>
                 <label style={inputLabelStyle}>רופא נלווה</label>
                 <span style={subLabelStyle}>השתתפות בתוכנית</span>
               </div>
-              <SegmentedControl value={data.accompanying} onChange={v => update('accompanying', v)} options={['לא', 'כן']} />
+              <SegmentedControl value={data.accompanying} onChange={v => update('accompanying', v)} options={['כן', 'לא']} />
             </div>
             <div style={rowFlex}>
               <label style={inputLabelStyle}>משרת אם</label>
-              <SegmentedControl value={data.mother} onChange={v => update('mother', v)} options={['לא', 'כן']} />
+              <SegmentedControl value={data.mother} onChange={v => update('mother', v)} options={['כן', 'לא']} />
             </div>
             <div id="clinic-row" style={rowFlex}>
               <label style={inputLabelStyle}>ניהול מרפאה</label>
@@ -827,21 +1266,34 @@ export default function App() {
           </div>
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '40px' }}>
           
           <div className="data-card" style={cardStyle}>
             <CategoryHeader title="היקף משרה" />
             
             <div style={listItemStyle}><div style={rowFlex}><span style={labelStyle}>קיצור יום (תקן יום)</span><span style={valStyle}>{dayStandard} ש</span></div></div>
             <div style={listItemStyle}><div style={rowFlex}><span style={labelStyle}>שעות למשרה בשבוע</span><span style={valStyle}>{weeklyHours} ש</span></div></div>
-            <div style={listItemStyle}><div style={rowFlex}><span style={labelStyle}>שעות פרונטליות בשבוע</span><span style={valStyle}>{frontalHours} ש</span></div></div>
+            <div style={listItemStyle}>
+              <div style={rowFlex}>
+                <span style={labelStyle}>שעות פרונטליות בשבוע</span>
+                <span style={valStyle}>{frontalHours} ש</span>
+              </div>
+              
+              {data.community === 'כן' && (
+                <div style={detailStyle}>
+                  (שעות הסכם קהילה נדרשות: {excessSouls > 400 ? 2 + Math.ceil((excessSouls - 400) / 150) : 2})
+                </div>
+              )}
+            </div>
             <div style={listItemStyle}><div style={rowFlex}><span style={labelStyle}>שעות לא פרונטליות</span><span style={valStyle}>{nonFrontalHours} ש</span></div></div>
             <div style={listItemStyle}><div style={rowFlex}><span style={labelStyle}>שעות השתלמות עצמית</span><span style={valStyle}>{selfStudyHours} ש</span></div></div>
             <div style={listItemStyle}><div style={rowFlex}><span style={labelStyle}>שעות תקן (חודשי)</span><span style={valStyle}>{monthStandard} ש</span></div></div>
             
-            <div style={{...rowFlex, ...highlightStyle, marginBottom: '0'}}>
-              <span style={{...labelStyle, color: '#082129'}}>נורמת נפשות</span>
-              <span style={{...valStyle, color: '#082129'}}>{norm.toLocaleString()}</span>
+            <div style={{...listItemStyle, marginBottom: '0'}}>
+              <div style={rowFlex}>
+                <span style={labelStyle}>נורמת נפשות</span>
+                <span style={valStyle}>{norm.toLocaleString()}</span>
+              </div>
             </div>
           </div>
 
@@ -856,7 +1308,7 @@ export default function App() {
             {data.management !== 'לא' && (
               <div style={listItemStyle}>
                 <div style={rowFlex}>
-                  <span style={labelStyle}>1129 - רופא אזורי (תוספת ניהול)</span>
+                  <span style={labelStyle}>1129 - רופא אזורי (ניהול)</span>
                   <span style={valStyle}>{formatCurrency(regionalDoctorAddition)}</span>
                 </div>
                 <div style={detailStyle}>(כוננויות: {onCallCount} | ערך יום: {dayValue.toFixed(2)})</div>
@@ -951,11 +1403,11 @@ export default function App() {
       </div>
 
       <div style={{
-        backgroundColor: '#e69a88',
-        color: '#082129',
+        backgroundColor: '#9CAF88',
+        color: '#0D0D12',
         maxWidth: '1000px',
         margin: '30px auto 20px auto',
-        borderRadius: '16px', 
+        borderRadius: '12px', 
         padding: '4px 20px', 
         display: 'flex',
         justifyContent: 'space-between',
@@ -968,13 +1420,116 @@ export default function App() {
         zIndex: 100,
         boxShadow: '0 -5px 25px rgba(0, 0, 0, 0.3)'
       }}>
-        <h2 style={{ margin: 0, fontSize: '1.6rem', fontWeight: 'bold', color: '#082129' }}>סה"כ (ברוטו)</h2>
-        <div style={{ fontSize: '1.6rem', fontWeight: 'bold', display: 'flex', alignItems: 'center', direction: 'ltr', color: '#082129' }}>
+        <h2 style={{ margin: 0, fontSize: '1.6rem', fontWeight: 'bold', color: '#0D0D12' }}>סה"כ (ברוטו)</h2>
+        <div style={{ fontSize: '1.6rem', fontWeight: 'bold', display: 'flex', alignItems: 'center', direction: 'ltr', color: '#0D0D12' }}>
           <span style={{ marginRight: '8px' }}>₪</span>
           <span>{grossSalary.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
         </div>
       </div>
+      </>
+      )}
 
-    </div>
-  );
-}
+      {/* ================= מסך המידע הנוסף ================= */}
+      {currentView === 'info' && (
+        <>
+          {/* מיכל הכותרת של מסך המידע */}
+          <div className="header-container" style={{ position: 'relative', textAlign: 'center', marginBottom: '40px', display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
+            
+            {/* כפתור החזרה צף בפינה הימנית העליונה */}
+            <div className="corner-action-btn" style={{ position: 'absolute', top: '0', right: '0' }}>
+              <BackButton onClick={() => setCurrentView('simulator')} />
+            </div>
+
+            <h1 style={{ ...fontArial, fontSize: '2.8rem', fontWeight: 'bold', color: '#ffffff', margin: '0 0 10px 0' }}>מידע נוסף</h1>
+            <h2 style={{ ...fontArial, fontSize: '1.4rem', color: textSage, margin: 0, fontWeight: 'bold' }}>תוספות ורכיבי שכר</h2>
+            
+            <div className="title-divider" style={{ width: '100%', maxWidth: '800px', height: '1px', backgroundColor: 'rgba(216, 191, 216, 0.2)', marginTop: '20px', marginBottom: '5px' }}></div>
+            
+            <Disclaimer />
+          </div>
+
+          {/* ציור הכרטיסיות הכהות והרכיבים מתוך מאגר המידע */}
+          <div className="main-layout" style={{ display: 'grid', gap: '30px' }}>
+            {infoData.map((section, index) => (
+              <div key={index} className="data-card" style={cardStyle}>
+                
+                <CategoryHeader title={section.category} />
+                
+                {/* ביטלנו את ה-gap כדי שהשורות ייצמדו, ויצרנו עיצוב שורות כמו בסימולטור */}
+                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                  {section.items.map((item, itemIdx) => {
+                    // בודקים אם זה הפריט האחרון בכרטיסייה כדי לא לשים לו קו הפרדה למטה
+                    const isLast = itemIdx === section.items.length - 1;
+                    
+                    return (
+                      <div 
+                        key={itemIdx}
+                        className="hover-input info-item-button"
+                        onClick={() => setSelectedInfo(item)}
+                        style={{ 
+                          backgroundColor: 'transparent', 
+                          cursor: 'pointer', 
+                          display: 'flex', 
+                          justifyContent: 'space-between', /* מרווח בין הטקסט לחץ */
+                          alignItems: 'center', 
+                          margin: '0 var(--edge-margin)', /* מתיחה מקצה לקצה כמו בסימולטור */
+                          padding: '16px var(--edge-padding)', 
+                          borderBottom: isLast ? 'none' : '2px solid #000000', /* קו ההפרדה השחור! */
+                          borderBottomRightRadius: isLast ? '24px' : '0',
+                          borderBottomLeftRadius: isLast ? '24px' : '0',
+                          transition: 'all 0.3s ease'
+                        }}
+                      >
+                        <span style={{ 
+                          color: '#D8BFD8', 
+                          fontSize: '1.2rem', 
+                          fontWeight: 'bold'
+                        }}>
+                          {item.title}
+                        </span>
+                        
+                        {/* משולש שמאלה עם קלאס לאנימציה */}
+                        <span className="animated-arrow" style={{ color: '#9CAF88', fontSize: '1rem', opacity: 0.8, display: 'inline-block' }}>◀</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* הציור של החלון הצף (Modal) - מופיע רק אם לחצו על משהו */}
+          {selectedInfo && (
+            <div 
+              onClick={() => setSelectedInfo(null)} // סגירה בלחיצה על הרקע
+              style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', backgroundColor: 'rgba(13,13,18,0.85)', zIndex: 9999, display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '20px', boxSizing: 'border-box', animation: 'fadeInOverlay 0.3s ease-out' }}
+            >
+              <div 
+                onClick={(e) => e.stopPropagation()} // מונע סגירה כשלוחצים בתוך החלון הלבן
+                style={{ backgroundColor: '#15151E', border: '1px solid #D8BFD8', borderRadius: '24px', padding: '15px', maxWidth: '600px', width: '100%', position: 'relative', boxShadow: '0 10px 40px rgba(0,0,0,0.5)', animation: 'slideUpModal 0.4s ease-out', textAlign: 'right', direction: 'rtl', maxHeight: '90vh', overflowY: 'auto' }}
+              >
+                {/* כפתור סגירה X */}
+                <button 
+                  onClick={() => setSelectedInfo(null)}
+                  style={{ position: 'absolute', top: '10px', left: '20px', background: 'none', border: 'none', color: '#9CAF88', fontSize: '1.5rem', cursor: 'pointer', fontWeight: 'bold' }}
+                >
+                  ✕
+                </button>
+                
+                <h2 style={{ color: '#D8BFD8', marginTop: 0, fontSize: '1.8rem', paddingRight: '30px' }}>{selectedInfo.title}</h2>
+                <div style={{ borderTop: '1px solid rgba(216,191,216,0.1)', margin: '15px 0' }}></div>
+                <div style={{ color: '#ffffff', fontSize: '1.1rem', lineHeight: '1.6', margin: 0, whiteSpace: 'pre-line' }}>
+                  {selectedInfo.description}
+                </div>
+              </div>
+            </div>
+          )}
+
+        </>
+      )}
+
+    {/* הוספת הקרדיט בתחתית הקונטיינר הראשי */}
+        <FooterCredits />
+      </div>
+    );
+  }
