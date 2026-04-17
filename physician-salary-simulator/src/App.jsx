@@ -10,7 +10,7 @@ const Disclaimer = () => (
     fontSize: '0.9rem',
     fontWeight: 'normal',
     color: '#D8BFD8',
-    maxWidth: '800px',
+    maxWidth: '940px',
     lineHeight: '1.5',
     opacity: 0.7
   }}>
@@ -45,9 +45,9 @@ const SegmentedControl = ({ value, onChange, options }) => (
     className="hover-input"
     style={{ 
       display: 'flex', 
-      backgroundColor: '#1A1A26', 
+      backgroundColor: '#14141b', 
       borderRadius: '12px', 
-      border: '1px solid rgba(216, 191, 216, 0.5)',
+      border: '1px solid rgba(216, 191, 216, 0.2)',
       width: '200px', 
       height: '36px', 
       overflow: 'hidden',
@@ -66,7 +66,7 @@ const SegmentedControl = ({ value, onChange, options }) => (
           justifyContent: 'center',
           cursor: 'pointer',
           backgroundColor: value === opt ? '#9CAF88' : 'transparent',
-          color: value === opt ? '#0D0D12' : '#D8BFD8',
+          color: value === opt ? '#14141b' : '#D8BFD8',
           fontWeight: 'bold',
           fontSize: '1.1rem',
           transition: 'all 0.2s ease',
@@ -95,7 +95,7 @@ const CustomSelect = ({ value, onChange, options }) => {
         onClick={() => setIsOpen(!isOpen)}
         className="hover-input"
         style={{
-          backgroundColor: '#1A1A26',
+          backgroundColor: '#14141b',
           color: '#D8BFD8',
           padding: '0 16px',
           borderRadius: '12px',
@@ -104,7 +104,7 @@ const CustomSelect = ({ value, onChange, options }) => {
           justifyContent: 'space-between',
           alignItems: 'center',
           boxSizing: 'border-box',
-          border: isOpen ? '1px solid #9CAF88' : '1px solid rgba(216, 191, 216, 0.5)',
+          border: isOpen ? '1px solid #9CAF88' : '1px solid rgba(216, 191, 216, 0.2)',
           transition: 'all 0.3s ease',
           width: '100%',
           height: '100%' 
@@ -120,9 +120,9 @@ const CustomSelect = ({ value, onChange, options }) => {
           top: 'calc(100% + 5px)',
           left: 0,
           right: 0,
-          backgroundColor: '#15151E',
+          backgroundColor: '#14141b',
           border: '1px solid #9CAF88',
-          borderRadius: '16px',
+          borderRadius: '12px',
           overflow: 'hidden',
           zIndex: 10,
           maxHeight: '220px',
@@ -144,7 +144,7 @@ const CustomSelect = ({ value, onChange, options }) => {
                   cursor: 'pointer',
                   fontWeight: 'bold',
                   fontSize: '1.1rem',
-                  color: hovered === idx ? '#0D0D12' : '#D8BFD8',
+                  color: hovered === idx ? '#14141b' : '#D8BFD8',
                   backgroundColor: hovered === idx ? '#9CAF88' : 'transparent',
                   transition: 'all 0.1s ease'
                 }}
@@ -181,18 +181,18 @@ const InfoButton = ({ onClick }) => {
         transition: 'all 0.3s ease',
         boxShadow: isHovered ? '0 4px 12px rgba(0,0,0,0.3)' : '0 2px 6px rgba(0,0,0,0.2)'
       }}>
-        {/* שימוש ב-SVG כדי לשלוט על אורך הקו של ה-i */}
+       
         <svg 
           width="20" height="34" /* מידות האייקון בתוך העיגול */
           viewBox="0 0 100 180" /* הגדרת מרחב הציור */
           fill="none" 
-          stroke="#0D0D12" /* האייקון נשאר שחור תמיד */
+          stroke="#14141b" /* האייקון נשאר שחור תמיד */
           strokeWidth="25" /* עובי הקו */
           strokeLinecap="round" /* קצוות מעוגלים */
           style={{ transition: 'all 0.3s ease' }} 
         >
           {/* הנקודה של ה-i */}
-          <circle cx="50" cy="30" r="15" fill="#0D0D12" stroke="none" />
+          <circle cx="50" cy="30" r="15" fill="#14141b" stroke="none" />
           {/* הגזע הראשי של ה-i, מוארך כלפי מטה */}
           <path d="M50 75 L50 160" />
         </svg>
@@ -214,7 +214,7 @@ const BackButton = ({ onClick }) => {
       onClick={onClick}
     >
       <div style={{
-        width: '50px', height: '50px', borderRadius: '50%', /* הגדלנו את העיגול ל-50px */
+        width: '50px', height: '50px', borderRadius: '50%',
         border: 'none', 
         display: 'flex', justifyContent: 'center', alignItems: 'center',
         backgroundColor: isHovered ? '#ffffff' : '#9CAF88', 
@@ -223,9 +223,9 @@ const BackButton = ({ onClick }) => {
         transform: isHovered ? 'scale(1.15)' : 'scale(1)' 
       }}>
         <svg 
-          width="30" height="30" /* הגדלנו את האייקון מ-26 ל-30 */
+          width="30" height="30"
           viewBox="0 0 24 24" fill="none" 
-          stroke="#0D0D12" 
+          stroke="#14141b" 
           strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
           style={{ transition: 'all 0.3s ease' }} 
         >
@@ -511,14 +511,14 @@ export default function App() {
   };
 
   // --- צבעים וסגנונות (הפלטה החדשה) ---
-  const bgMain = '#0D0D12'; 
+  const bgMain = '#14141b'; 
   const bgCard = '#1c1b29'; 
   const textLilac = '#D8BFD8'; 
   const textSage = '#9CAF88'; 
-  const inputBg = '#1c1b29'; 
+  const inputBg = '#14141b'; 
   const inputText = '#D8BFD8'; 
 
-  const fontArial = { fontFamily: '"Arial", "Helvetica Neue", Helvetica, sans-serif' };
+  const fontArial = { fontFamily: '"Secular One", sans-serif' };
 
   const mainWrapperStyle = {
     ...fontArial,
@@ -547,36 +547,33 @@ export default function App() {
   };
 
   // --- הקוד החדש של כותרת האזורים ---
-  const CategoryHeader = ({ title, total }) => (
+  const CategoryHeader = ({ title, total, bgColor = '#D8BFD8' }) => (
     <div className="category-header" style={{
       margin: '-20px -30px 0px -30px', 
       padding: '10px 20px', 
-      backgroundColor: textSage, 
+      backgroundColor: bgColor, /* שימוש במשתנה bgColor */
       borderTopLeftRadius: '24px', 
       borderTopRightRadius: '24px',
-      borderBottom: '2px solid #000000', /* <--- הוספנו את פס ההפרדה השחור כאן */
+      borderBottom: '2px solid #14141b',
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center' 
     }}>
 
-      {/* --- שליטה בגודל הטקסט של הכותרת (למשל "היקף משרה") --- */}
-      <h3 style={{ ...fontArial, color: '#0D0D12', fontSize: '1.5rem', fontWeight: 'bold', margin: 0 }}>
+      <h3 style={{ ...fontArial, color: '#14141b', fontSize: '1.5rem', fontWeight: 'bold', margin: 0 }}>
         {title}
       </h3>
       
       {total !== undefined && (
         <div style={{ 
           ...fontArial, 
-          /* --- שליטה בגודל הטקסט של המספר (סכום הסה"כ) --- */
           fontSize: '1.2rem', 
-          color: '#000000', 
+          color: '#14141b', 
           fontWeight: 'bold', 
           display: 'flex',
           alignItems: 'center'
         }}>
-          {/* --- שליטה בגודל הטקסט של המילה "סה"כ" --- */}
-          <span style={{ color: '#000000', marginLeft: '8px', fontSize: '1.2rem' }}>סה"כ </span>
+          <span style={{ color: '#14141b', marginLeft: '8px', fontSize: '1.2rem' }}>סה"כ </span>
           {formatCurrency(total)}
         </div>
       )}
@@ -590,7 +587,7 @@ export default function App() {
     backgroundColor: bgCard,
     borderRadius: '0px', 
     marginBottom: '0px',
-    borderBottom: '2px solid #000000',
+    borderBottom: '2px solid #14141b',
     margin: '0 var(--edge-margin)', 
     padding: '12px var(--edge-padding)' 
   };
@@ -633,7 +630,7 @@ export default function App() {
     color: inputText,
     padding: '0 16px', 
     borderRadius: '12px',
-    border: '1px solid rgba(216, 191, 216, 0.5)',
+    border: '1px solid rgba(216, 191, 216, 0.2)',
     width: '200px', 
     height: '36px',
     textAlign: 'center',
@@ -916,21 +913,26 @@ export default function App() {
     <div id="salary-simulator-root" style={mainWrapperStyle}>
       
       <style dangerouslySetInnerHTML={{__html: `
+        /* ייבוא פונט Secular One מגוגל */
+        @import url('https://fonts.googleapis.com/css2?family=Secular+One&display=swap');
+
         #salary-simulator-root {
           --edge-margin: -30px;
           --edge-padding: 30px;
         }
+
+        /* החלת הפונט על כל רכיבי האפליקציה */
         #salary-simulator-root * {
-          font-family: Arial, "Helvetica Neue", Helvetica, sans-serif !important;
+          font-family: 'Secular One', sans-serif !important;
         }
 
         ::selection {
           background-color: #9CAF88 !important;
-          color: #0D0D12 !important;
+          color: #14141b !important;
         }
         ::-moz-selection {
           background-color: #9CAF88 !important;
-          color: #0D0D12 !important;
+          color: #14141b !important;
         }
 
         input::-webkit-outer-spin-button,
@@ -946,7 +948,7 @@ export default function App() {
           width: 6px;
         }
         ::-webkit-scrollbar-track {
-          background: #000000;
+          background: #14141b;
           border-radius: 10px;
         }
         ::-webkit-scrollbar-thumb {
@@ -959,12 +961,12 @@ export default function App() {
           outline: none !important;
         }
         .hover-input:hover {
-          background-color: #333247 !important;
+          background-color: #14141b !important;
           box-shadow: inset 0 0 0 1px #D8BFD8 !important;
         }
 
         .hover-input:focus {
-          background-color: #333247 !important;
+          background-color: #14141b !important;
           box-shadow: 0 0 0 1px #9CAF88 !important;
           color: #ffffff !important;
         }
@@ -1012,7 +1014,7 @@ export default function App() {
           padding: 10px var(--edge-padding) !important;
         }
         .inputs-list > div:not(:last-child) {
-          border-bottom: 2px solid #000000;
+          border-bottom: 2px solid #14141b;
         }
 
 
@@ -1057,17 +1059,11 @@ export default function App() {
             font-size: 20px !important;
           }
 
-          /* הקטנת כפתורי הפינה במובייל */
-          .corner-action-btn {
-            transform: scale(0.65); /* מכווץ את הכפתור ל-75% מגודלו */
-            transform-origin: top right; /* שומר אותו צמוד בדיוק לפינה הימנית העליונה */
-          }
-
           /* 6. הקטנת הדיסקליימר */
           .disclaimer-text {
             font-size: 11px !important;
             line-height: 1.3 !important;
-            padding: 0 10px !important;
+            padding: 0 0px !important;
           }
 
           /* 7. הקטנת הרווח הפנימי של הכרטיסיות הכהות במובייל */
@@ -1091,10 +1087,18 @@ export default function App() {
             margin-bottom: 15px !important;
           }
 
-          /* הזזת אזור הכותרות למטה וצמצום הרווח מהכרטיסיות במובייל */
-          .header-container {
-            margin-top: 25px !important;   /* זהו הרווח מהקצה העליון של המסך */
-            margin-bottom: 20px !important; /* זהו הרווח לכיוון הכרטיסיות */
+          /* התאמות לכרטיסיית הכותרת החדשה במובייל */
+          .header-card {
+            margin-top: 10px !important;
+            margin-bottom: 25px !important;
+            padding: 25px 15px 20px 15px !important;
+          }
+          
+          .header-card .corner-action-btn {
+            top: 10px !important;
+            right: 10px !important;
+            transform: scale(0.55) !important;
+            transform-origin: top right !important;
           }
 
          /* צמצום הרווחים סביב קו ההפרדה במובייל */
@@ -1129,25 +1133,43 @@ export default function App() {
       {/* ================= מסך הסימולטור ================= */}
       {currentView === 'simulator' && (
         <>
-          {/* מיכל הכותרת (מוגדר כ-relative כדי לאפשר לכפתור לצוף בתוכו) */}
-          <div className="header-container" style={{ position: 'relative', textAlign: 'center', marginBottom: '50px', display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
+          {/* כרטיסיית הכותרת הראשית (עם פס הדגשה ורוד עליון) */}
+          <div className="header-card" style={{ 
+            backgroundColor: '#1c1b29', 
+            borderRadius: '24px', 
+            border: '1px solid rgba(216, 191, 216, 0.15)',
+            borderTop: '8px solid #D8BFD8', /* <--- זה הפס הורוד הדק למעלה! */
+            width: '100%',
+            maxWidth: '1000px',
+            boxSizing: 'border-box',
+            margin: '0 auto 40px auto',
+            padding: '35px 20px 25px 20px', /* ריווח אחיד לכל התוכן */
+            display: 'flex', 
+            flexDirection: 'column', 
+            alignItems: 'center',
+            position: 'relative', /* מאפשר למקם את הכפתור בפינה */
+            boxShadow: '0 8px 24px rgba(0,0,0,0.15)'
+          }}>
             
-            {/* הכפתור צף בפינה הימנית העליונה */}
-            <div className="corner-action-btn" style={{ position: 'absolute', top: '0', right: '0' }}>
+            {/* הכפתור בפינה הימנית העליונה */}
+            <div className="corner-action-btn" style={{ position: 'absolute', top: '15px', right: '15px' }}>
               <InfoButton onClick={() => setCurrentView('info')} />
             </div>
             
-            <div className="main-title-wrapper" style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '15px' }}>
-              <h1 style={{ ...fontArial, margin: 0, fontSize: '2.8rem', fontWeight: 'bold', letterSpacing: '-0.5px', color: '#ffffff' }}>
-                סימולטור שכר
-              </h1>
-            </div>
+            <h1 style={{ fontFamily: '"Secular One", sans-serif', margin: '0 0 10px 0', fontSize: '2.8rem', fontWeight: 'bold', color: '#ffffff' }}>
+              סימולטור שכר
+            </h1>
 
-            <h2 style={{ ...fontArial, margin: '0', fontSize: '1.4rem', fontWeight: 'bold', color: textSage, opacity: 0.9 }}>
+            <h2 style={{ fontFamily: '"Secular One", sans-serif', margin: '0', fontSize: '1.4rem', fontWeight: 'bold', color: '#9CAF88', opacity: 0.9 }}>
               רופאי משפחה בקופ"ח כללית
             </h2>
             
-            <div className="title-divider" style={{ width: '100%', maxWidth: '800px', height: '1px', backgroundColor: 'rgba(216, 191, 216, 0.2)', marginTop: '20px', marginBottom: '5px' }}></div>
+            <div className="title-divider" style={{ 
+              alignSelf: 'stretch', 
+              margin: '20px -20px 15px -20px',
+              height: '2px', 
+              backgroundColor: '#14141b' 
+            }}></div>
             
             <Disclaimer />
           </div>
@@ -1155,7 +1177,7 @@ export default function App() {
       <div className="main-layout" style={{ display: 'grid', gap: '30px', maxWidth: '1000px', margin: '0 auto' }}>
         
         <div className="data-card" style={{ ...cardStyle, height: 'fit-content' }}>
-          <CategoryHeader title="הזנת נתונים" />
+          <CategoryHeader title="הזנת נתונים" bgColor="#9CAF88" />
           
           <div className="inputs-list" style={{ display: 'flex', flexDirection: 'column' }}>
             <div style={rowFlex}>
@@ -1404,24 +1426,24 @@ export default function App() {
 
       <div style={{
         backgroundColor: '#9CAF88',
-        color: '#0D0D12',
+        color: '#14141b',
         maxWidth: '1000px',
         margin: '30px auto 20px auto',
-        borderRadius: '12px', 
-        padding: '4px 20px', 
+        borderRadius: '24px', 
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
         boxSizing: 'border-box',
         
-        /* --- פקודות הריחוף החדשות --- */
+        /* --- פקודות הריחוף והעובי --- */
         position: 'sticky',
-        bottom: '20px',
+        bottom: '10px', /* <--- זו השורה שגורמת לו להישאר דביק למטה! */
+        padding: '16px 20px',
         zIndex: 100,
         boxShadow: '0 -5px 25px rgba(0, 0, 0, 0.3)'
       }}>
-        <h2 style={{ margin: 0, fontSize: '1.6rem', fontWeight: 'bold', color: '#0D0D12' }}>סה"כ (ברוטו)</h2>
-        <div style={{ fontSize: '1.6rem', fontWeight: 'bold', display: 'flex', alignItems: 'center', direction: 'ltr', color: '#0D0D12' }}>
+        <h2 style={{ margin: 0, fontSize: '1.6rem', fontWeight: 'bold', color: '#14141b' }}>סה"כ (ברוטו)</h2>
+        <div style={{ fontSize: '1.6rem', fontWeight: 'bold', display: 'flex', alignItems: 'center', direction: 'ltr', color: '#14141b' }}>
           <span style={{ marginRight: '8px' }}>₪</span>
           <span>{grossSalary.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
         </div>
@@ -1432,28 +1454,52 @@ export default function App() {
       {/* ================= מסך המידע הנוסף ================= */}
       {currentView === 'info' && (
         <>
-          {/* מיכל הכותרת של מסך המידע */}
-          <div className="header-container" style={{ position: 'relative', textAlign: 'center', marginBottom: '40px', display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
+          {/* כרטיסיית הכותרת - מסך מידע (עם פס הדגשה ורוד עליון) */}
+          <div className="header-card" style={{ 
+            backgroundColor: '#1c1b29', 
+            borderRadius: '24px', 
+            border: '1px solid rgba(216, 191, 216, 0.15)',
+            borderTop: '8px solid #D8BFD8', /* הפס הורוד */
+            width: '100%',
+            maxWidth: '1000px',
+            boxSizing: 'border-box',
+            margin: '0 auto 40px auto',
+            padding: '35px 20px 25px 20px',
+            display: 'flex', 
+            flexDirection: 'column', 
+            alignItems: 'center',
+            position: 'relative',
+            boxShadow: '0 8px 24px rgba(0,0,0,0.15)'
+          }}>
             
-            {/* כפתור החזרה צף בפינה הימנית העליונה */}
-            <div className="corner-action-btn" style={{ position: 'absolute', top: '0', right: '0' }}>
+            <div className="corner-action-btn" style={{ position: 'absolute', top: '15px', right: '15px' }}>
               <BackButton onClick={() => setCurrentView('simulator')} />
             </div>
 
-            <h1 style={{ ...fontArial, fontSize: '2.8rem', fontWeight: 'bold', color: '#ffffff', margin: '0 0 10px 0' }}>מידע נוסף</h1>
-            <h2 style={{ ...fontArial, fontSize: '1.4rem', color: textSage, margin: 0, fontWeight: 'bold' }}>תוספות ורכיבי שכר</h2>
+            <h1 style={{ fontFamily: '"Secular One", sans-serif', margin: '0 0 10px 0', fontSize: '2.8rem', fontWeight: 'bold', color: '#ffffff' }}>
+              מידע נוסף
+            </h1>
+
+            <h2 style={{ fontFamily: '"Secular One", sans-serif', margin: '0', fontSize: '1.4rem', fontWeight: 'bold', color: '#9CAF88', opacity: 0.9 }}>
+              תוספות ורכיבי שכר
+            </h2>
             
-            <div className="title-divider" style={{ width: '100%', maxWidth: '800px', height: '1px', backgroundColor: 'rgba(216, 191, 216, 0.2)', marginTop: '20px', marginBottom: '5px' }}></div>
+            <div className="title-divider" style={{ 
+              alignSelf: 'stretch', 
+              margin: '20px -20px 15px -20px', 
+              height: '2px', 
+              backgroundColor: '#14141b' 
+            }}></div>
             
             <Disclaimer />
           </div>
 
           {/* ציור הכרטיסיות הכהות והרכיבים מתוך מאגר המידע */}
-          <div className="main-layout" style={{ display: 'grid', gap: '30px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '30px', width: '100%', maxWidth: '1000px', margin: '0 auto' }}>
             {infoData.map((section, index) => (
               <div key={index} className="data-card" style={cardStyle}>
                 
-                <CategoryHeader title={section.category} />
+                <CategoryHeader title={section.category} bgColor="#9CAF88" />
                 
                 {/* ביטלנו את ה-gap כדי שהשורות ייצמדו, ויצרנו עיצוב שורות כמו בסימולטור */}
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -1474,7 +1520,7 @@ export default function App() {
                           alignItems: 'center', 
                           margin: '0 var(--edge-margin)', /* מתיחה מקצה לקצה כמו בסימולטור */
                           padding: '16px var(--edge-padding)', 
-                          borderBottom: isLast ? 'none' : '2px solid #000000', /* קו ההפרדה השחור! */
+                          borderBottom: isLast ? 'none' : '2px solid #14141b', /* קו ההפרדה השחור! */
                           borderBottomRightRadius: isLast ? '24px' : '0',
                           borderBottomLeftRadius: isLast ? '24px' : '0',
                           transition: 'all 0.3s ease'
