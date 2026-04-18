@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Analytics } from "@vercel/analytics/react";
 
 // --- רכיבים מותאמים אישית (Custom Components) ---
 
@@ -554,7 +555,7 @@ export default function App() {
       backgroundColor: bgColor, /* שימוש במשתנה bgColor */
       borderTopLeftRadius: '24px', 
       borderTopRightRadius: '24px',
-      borderBottom: '2px solid #14141b',
+      borderBottom: '3px solid #14141b',
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center' 
@@ -587,7 +588,7 @@ export default function App() {
     backgroundColor: bgCard,
     borderRadius: '0px', 
     marginBottom: '0px',
-    borderBottom: '2px solid #14141b',
+    borderBottom: '3px solid #14141b',
     margin: '0 var(--edge-margin)', 
     padding: '12px var(--edge-padding)' 
   };
@@ -1011,10 +1012,10 @@ export default function App() {
         /* פסי הפרדה שחורים ורווחים לאזור הזנת הנתונים מקצה לקצה */
         .inputs-list > div {
           margin: 0 var(--edge-margin) !important;
-          padding: 10px var(--edge-padding) !important;
+          padding: 7px var(--edge-padding) !important;
         }
         .inputs-list > div:not(:last-child) {
-          border-bottom: 2px solid #14141b;
+          border-bottom: 3px solid #14141b;
         }
 
 
@@ -1022,7 +1023,7 @@ export default function App() {
         @media (max-width: 768px) {
           .main-layout { 
             grid-template-columns: 1fr !important; 
-            gap: 40px !important; 
+            gap: 30px !important; 
           }
           
           #salary-simulator-root {
@@ -1079,7 +1080,7 @@ export default function App() {
 
           /* 8. הקטנת הטקסט ספציפית בדרופ-דאון של ניהול מרפאה */
           #clinic-row .select-wrapper * {
-            font-size: 13px !important;
+            font-size: 16px !important;
           }
           
           /* הקטנת הרווח בין הכותרות במובייל */
@@ -1167,7 +1168,7 @@ export default function App() {
             <div className="title-divider" style={{ 
               alignSelf: 'stretch', 
               margin: '20px -20px 15px -20px',
-              height: '2px', 
+              height: '3px', 
               backgroundColor: '#14141b' 
             }}></div>
             
@@ -1288,7 +1289,7 @@ export default function App() {
           </div>
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '40px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
           
           <div className="data-card" style={cardStyle}>
             <CategoryHeader title="היקף משרה" />
@@ -1487,7 +1488,7 @@ export default function App() {
             <div className="title-divider" style={{ 
               alignSelf: 'stretch', 
               margin: '20px -20px 15px -20px', 
-              height: '2px', 
+              height: '3px', 
               backgroundColor: '#14141b' 
             }}></div>
             
@@ -1520,7 +1521,7 @@ export default function App() {
                           alignItems: 'center', 
                           margin: '0 var(--edge-margin)', /* מתיחה מקצה לקצה כמו בסימולטור */
                           padding: '16px var(--edge-padding)', 
-                          borderBottom: isLast ? 'none' : '2px solid #14141b', /* קו ההפרדה השחור! */
+                          borderBottom: isLast ? 'none' : '3px solid #14141b', /* קו ההפרדה השחור! */
                           borderBottomRightRadius: isLast ? '24px' : '0',
                           borderBottomLeftRadius: isLast ? '24px' : '0',
                           transition: 'all 0.3s ease'
@@ -1575,7 +1576,10 @@ export default function App() {
       )}
 
     {/* הוספת הקרדיט בתחתית הקונטיינר הראשי */}
-        <FooterCredits />
-      </div>
+          <FooterCredits />
+
+          {/* Vercel Analytics */}
+          <Analytics />
+        </div>
     );
-  }
+}
