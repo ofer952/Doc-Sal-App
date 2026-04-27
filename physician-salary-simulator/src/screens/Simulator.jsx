@@ -1,27 +1,8 @@
 import React, { useState } from 'react';
 import PageHeader from '../components/PageHeader';
+import Credit from '../components/Credit';
 
 // --- רכיבים מותאמים אישית (Custom Components) ---
-
-// רכיב קרדיט אישי בתחתית העמוד
-const FooterCredits = () => (
-  <div style={{ 
-    textAlign: 'center', 
-    padding: '40px 0 20px 0', 
-    opacity: 0.4, 
-    width: '100%'
-  }}>
-    <p style={{ 
-      fontFamily: 'Arial, "Helvetica Neue", Helvetica, sans-serif', 
-      fontSize: '0.8rem', 
-      color: '#D8BFD8', 
-      margin: 0,
-      letterSpacing: '0.5px'
-    }}>
-      {new Date().getFullYear()} Created by Ofer Dahan
-    </p>
-  </div>
-);
 
 // 1. כפתור בחירה מפוצל (Segmented Control) לכן/לא
 const SegmentedControl = ({ value, onChange, options }) => (
@@ -29,11 +10,11 @@ const SegmentedControl = ({ value, onChange, options }) => (
     className="hover-input"
     style={{ 
       display: 'flex', 
-      backgroundColor: '#14141b', 
+      backgroundColor: '#14141b',
       borderRadius: '12px', 
       border: '1px solid rgba(216, 191, 216, 0.2)',
-      width: '200px', 
-      height: '36px', 
+      width: 'var(--mobile-input-width, 200px)',
+      height: 'var(--input-height)',
       overflow: 'hidden',
       boxSizing: 'border-box',
       transition: 'all 0.3s ease'
@@ -52,7 +33,7 @@ const SegmentedControl = ({ value, onChange, options }) => (
           backgroundColor: value === opt ? '#9CAF88' : 'transparent',
           color: value === opt ? '#14141b' : '#D8BFD8',
           fontWeight: 'bold',
-          fontSize: '1.1rem',
+          fontSize: 'var(--fs-item)', /* <--- שואב מהמשתנה המרכזי */
           transition: 'all 0.2s ease',
           fontFamily: 'Arial, "Helvetica Neue", Helvetica, sans-serif'
         }}
@@ -72,7 +53,7 @@ const CustomSelect = ({ value, onChange, options }) => {
   const displayValue = typeof currentItem === 'object' ? currentItem.label : currentItem;
 
   return (
-    <div className="select-wrapper" style={{ position: 'relative', width: '200px', height: '36px', fontFamily: 'Arial, "Helvetica Neue", Helvetica, sans-serif' }}>
+    <div className="select-wrapper" style={{ position: 'relative', width: 'var(--mobile-input-width, 200px)', height: 'var(--input-height)', fontFamily: 'Arial, "Helvetica Neue", Helvetica, sans-serif' }}>
       {isOpen && <div style={{ position: 'fixed', inset: 0, zIndex: 9 }} onClick={() => setIsOpen(false)} />}
       
       <div
@@ -94,8 +75,8 @@ const CustomSelect = ({ value, onChange, options }) => {
           height: '100%' 
         }}
       >
-        <span style={{ flex: 1, textAlign: 'center', fontWeight: 'bold', fontSize: '1.1rem' }}>{displayValue}</span>
-        <span style={{ fontSize: '0.7rem', transition: 'transform 0.2s', transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)', position: 'relative', right: '5px' }}>▼</span>
+        <span style={{ flex: 1, textAlign: 'center', fontWeight: 'bold', fontSize: 'var(--fs-item)' }}>{displayValue}</span>
+        <span style={{ fontSize: '0.7em', transition: 'transform 0.2s', transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)', position: 'relative', right: '5px' }}>▼</span>
       </div>
       
       {isOpen && (
@@ -127,7 +108,7 @@ const CustomSelect = ({ value, onChange, options }) => {
                   textAlign: 'center',
                   cursor: 'pointer',
                   fontWeight: 'bold',
-                  fontSize: '1.1rem',
+                  fontSize: 'var(--fs-item)', /* <--- שואב מהמשתנה המרכזי */
                   color: hovered === idx ? '#14141b' : '#D8BFD8',
                   backgroundColor: hovered === idx ? '#9CAF88' : 'transparent',
                   transition: 'all 0.1s ease'
@@ -403,10 +384,10 @@ const Simulator = ({ onNavigate }) => {
   };
 
   // --- צבעים וסגנונות ---
-  const bgMain = '#14141b'; 
+  const bgMain = 'var(--app-bg)';
   const bgCard = '#1c1b29'; 
   const textLilac = '#D8BFD8'; 
-  const inputBg = '#14141b'; 
+  const inputBg = '#14141b';
   const inputText = '#D8BFD8'; 
 
   const fontArial = { fontFamily: '"Secular One", sans-serif' };
@@ -444,24 +425,24 @@ const Simulator = ({ onNavigate }) => {
       backgroundColor: bgColor, 
       borderTopLeftRadius: '24px', 
       borderTopRightRadius: '24px',
-      borderBottom: '3px solid #14141b',
+      borderBottom: '3px solid var(--app-bg)',
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center' 
     }}>
-      <h3 style={{ ...fontArial, color: '#14141b', fontSize: '1.5rem', fontWeight: 'bold', margin: 0 }}>
+      <h3 style={{ ...fontArial, color: '#14141b', fontSize: 'var(--fs-header)', fontWeight: 'bold', margin: 0, letterSpacing: '-0.7px' }}>
         {title}
       </h3>
       {total !== undefined && (
         <div style={{ 
           ...fontArial, 
-          fontSize: '1.2rem', 
+          fontSize: 'var(--fs-header)', 
           color: '#14141b', 
           fontWeight: 'bold', 
           display: 'flex',
           alignItems: 'center'
         }}>
-          <span style={{ color: '#14141b', marginLeft: '8px', fontSize: '1.2rem' }}>סה"כ </span>
+          <span style={{ color: '#14141b', marginLeft: '8px', fontSize: 'var(--fs-header)' }}>סה"כ </span>
           {formatCurrency(total)}
         </div>
       )}
@@ -475,40 +456,41 @@ const Simulator = ({ onNavigate }) => {
     backgroundColor: bgCard,
     borderRadius: '0px', 
     marginBottom: '0px',
-    borderBottom: '3px solid #14141b',
+    borderBottom: '3px solid var(--app-bg)', 
     margin: '0 var(--edge-margin)', 
-    padding: '12px var(--edge-padding)' 
+    padding: '10px var(--edge-padding)' 
   };
 
+  // --- שימוש במשתני ה-CSS האחידים ---
   const inputLabelStyle = {
     ...fontArial,
     color: textLilac,
-    fontSize: '1.1rem',
+    fontSize: 'var(--fs-item)',
     fontWeight: 'bold',
     textAlign: 'right'
   };
 
   const subLabelStyle = {
     ...fontArial,
-    fontSize: '0.85rem',
+    fontSize: 'var(--fs-hint)',
     fontWeight: 'normal',
     color: textLilac,
-    opacity: 0.8,
+    opacity: 0.7,
     textAlign: 'right',
-    marginTop: '0px'
+    marginTop: '-2px'
   };
 
   const labelStyle = {
     ...fontArial,
     color: textLilac,
-    fontSize: '1.1rem',
+    fontSize: 'var(--fs-item)',
     fontWeight: 'bold'
   };
 
   const valStyle = {
     ...fontArial,
     color: textLilac,
-    fontSize: '1.1rem',
+    fontSize: 'var(--fs-item)',
     fontWeight: 'bold'
   };
 
@@ -519,10 +501,10 @@ const Simulator = ({ onNavigate }) => {
     padding: '0 16px', 
     borderRadius: '12px',
     border: '1px solid rgba(216, 191, 216, 0.2)',
-    width: '200px', 
-    height: '36px',
+    width: 'var(--mobile-input-width, 200px)',
+    height: 'var(--input-height)',
     textAlign: 'center',
-    fontSize: '1.1rem',
+    fontSize: 'var(--fs-item)',
     fontWeight: 'bold',
     outline: 'none',
     boxSizing: 'border-box'
@@ -530,7 +512,7 @@ const Simulator = ({ onNavigate }) => {
 
   const detailStyle = { 
     ...fontArial,
-    fontSize: '0.85rem', 
+    fontSize: 'var(--fs-hint)', 
     fontWeight: 'normal',  
     color: textLilac, 
     opacity: 0.8,
@@ -546,6 +528,16 @@ const Simulator = ({ onNavigate }) => {
         @import url('https://fonts.googleapis.com/css2?family=Secular+One&display=swap');
 
         #salary-simulator-root {
+          /* ========================================= */
+          /* --- כפתורי שליטה בגדלי פונט (מחשב) --- */
+          /* ========================================= */
+          --fs-header: 1.3rem; /* 1. כותרות כרטיסיות, סה"כ וסכומים */
+          --fs-item: 1.0rem;   /* 2. רכיבים, תיבות הזנה, וכפתורים */
+          --fs-hint: 0.85rem;  /* 3. שורות הסבר ופירוט חישובים */
+          --input-height: 34px; /* עובי שדות הזנה */
+          --fs-total: 1.3rem; /* גודל פונט פס ירוק סהכ */
+          --total-bar-padding: 12px 20px; /* עובי הפס הירוק סהכ ברוטו */
+
           --edge-margin: -30px;
           --edge-padding: 30px;
         }
@@ -615,31 +607,32 @@ const Simulator = ({ onNavigate }) => {
           padding: 7px var(--edge-padding) !important;
         }
         .inputs-list > div:not(:last-child) {
-          border-bottom: 3px solid #14141b;
+          border-bottom: 3px solid var(--app-bg);
         }
 
         @media (max-width: 768px) {
-          .main-layout { 
-            grid-template-columns: 1fr !important; 
-            gap: 30px !important; 
-          }
-          
           #salary-simulator-root {
+            /* ========================================= */
+            /* --- כפתורי שליטה בגדלי פונט (מובייל) --- */
+            /* ========================================= */
+            --fs-header: 18px; /* 1. כותרות כרטיסיות מובייל */
+            --fs-item: 16px;   /* 2. רכיבים והזנה מובייל */
+            --fs-hint: 12px;   /* 3. שורות הסבר מובייל */
+            --input-height: 32px; /* עובי שדות הזנה */
+            --fs-total: 1.2rem; /* גודל פונט פס ירוק סהכ*/
+            --total-bar-padding: 8px 15px; /* עובי הפס הירוק סהכ ברוטו*/
+            --mobile-input-width: 150px;
             --edge-margin: -14px;
             --edge-padding: 14px;
             font-size: 12px !important; 
             padding: 15px 10px !important; 
           }
 
-          .hover-input , .select-wrapper {
-            width: 140px !important; 
-            max-width: 55vw !important;
-            font-size: 18px !important; 
+          .main-layout { 
+            grid-template-columns: 1fr !important; 
+            gap: 30px !important; 
           }
           
-          h1 { font-size: 2.0rem !important; margin-bottom: 5px !important; }
-          h2, h3 { font-size: 20px !important; }
-
           .data-card {
             padding: 10px 14px 0px !important;
           }
@@ -648,11 +641,6 @@ const Simulator = ({ onNavigate }) => {
             margin: -20px -14px 0px -14px !important;
             padding: 4px 14px !important;
           }
-
-          #clinic-row .select-wrapper * {
-            font-size: 16px !important;
-          }
-
         }
       `}} />
 
@@ -925,18 +913,22 @@ const Simulator = ({ onNavigate }) => {
         boxSizing: 'border-box',
         position: 'sticky',
         bottom: '10px',
-        padding: '16px 20px',
+        padding: 'var(--total-bar-padding)',
         zIndex: 100,
         boxShadow: '0 -5px 25px rgba(0, 0, 0, 0.3)'
       }}>
-        <h2 style={{ margin: 0, fontSize: '1.6rem', fontWeight: 'bold', color: '#14141b' }}>סה"כ (ברוטו)</h2>
-        <div style={{ fontSize: '1.6rem', fontWeight: 'bold', display: 'flex', alignItems: 'center', direction: 'ltr', color: '#14141b' }}>
+        <h2 style={{ margin: 0, fontSize: 'var(--fs-total)', fontWeight: 'bold', color: '#14141b' }}>
+          סה"כ (ברוטו)
+        </h2>
+
+        {/* שינוי בסכום */}
+        <div style={{ fontSize: 'var(--fs-total)', fontWeight: 'bold', display: 'flex', alignItems: 'center', direction: 'ltr', color: '#14141b' }}>
           <span style={{ marginRight: '8px' }}>₪</span>
           <span>{grossSalary.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
         </div>
       </div>
 
-      <FooterCredits />
+      <Credit />
     </div>
   );
 };

@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 
 const Disclaimer = () => (
   <p className="disclaimer-text" style={{
-    fontFamily: '"Secular One", sans-serif', margin: '5px 0 0 0', fontSize: '0.78rem',
+    fontFamily: '"Secular One", sans-serif', margin: '0px 0 -10px 0', fontSize: '0.78rem',
     fontWeight: 'normal', color: '#D8BFD8', maxWidth: '940px', lineHeight: '1.5', opacity: 0.7, textAlign: 'center'
   }}>
    יישומון זו הינו כלי עזר פרטי ואינו מוצר רשמי של שירותי בריאות כללית. המידע והחישובים המוצגים בו מבוססים על הערכות ופרשנות אישית של הסכמי השכר, ואין לראות בהם נתונים מחייבים או ייעוץ מקצועי. התוצאות בפועל עשויות להיות שונות. המידע הקובע והרשמי נמצא אך ורק בידי מחלקת משאבי אנוש והשכר בארגון.
@@ -22,10 +22,10 @@ const BackButton = ({ onClick }) => {
     >
       <div style={{
         width: '50px', height: '50px', borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center', boxSizing: 'border-box',
-        border: isHovered ? '2px solid #ffffff' : '1px solid rgba(216, 191, 216, 0.2)', 
-        backgroundColor: isHovered ? '#2a293d' : '#1c1b29', 
+        border: isHovered ? '5px solid var(--app-bg)' : '3px solid var(--app-bg)', 
+        backgroundColor: isHovered ? '#3e3c55' : '#2a293d', 
         boxShadow: isHovered ? '0 8px 16px rgba(0,0,0,0.5)' : '0 2px 6px rgba(0,0,0,0.2)',
-        transform: isHovered ? 'scale(1.1)' : 'scale(1)', 
+        transform: isHovered ? 'scale(1.0)' : 'scale(1)', 
         transition: 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
       }}>
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={isHovered ? '#ffffff' : '#9CAF88'} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" style={{ transition: 'stroke 0.2s ease' }}>
@@ -48,11 +48,11 @@ const PageHeader = ({ title, subtitle, onBack }) => {
           .header-card-wrapper { margin-top: 25px !important; margin-bottom: 30px !important; }
           .header-card { margin: 0 !important; padding: 25px 15px 10px 15px !important; background-color: #1c1b29 !important; background-image: none !important; }
           .header-pink-bar { height: 10px !important; }
-          .header-card-wrapper .corner-action-btn { top: 3px !important; right: 15px !important; transform: scale(0.6) !important; transform-origin: top right !important; }
-          .page-header-title { font-size: 2.0rem !important; margin-bottom: 5px !important; }
+          .header-card-wrapper .corner-action-btn { top: 3px !important; right: 15px !important; transform: scale(0.7) !important; transform-origin: top right !important; }
+          .page-header-title { font-size: 2.0rem !important; margin-bottom: 3px !important; }
           .page-header-subtitle { font-size: 1.2rem !important; }
-          .title-divider { margin-top: 10px !important; margin-bottom: 0px !important; }
-          .disclaimer-text { font-size: 9.5px !important; line-height: 1.3 !important; margin-top: 10px !important; }
+          .title-divider { margin-top: 5px !important; margin-bottom: 5px !important; }
+          .disclaimer-text { font-size: 9.5px !important; line-height: 1.3 !important; margin-top: 2px !important; margin-bottom: 0px !important; }
         }
       `}} />
 
@@ -79,7 +79,7 @@ const PageHeader = ({ title, subtitle, onBack }) => {
           </h2>
         )}
       
-        <div className="title-divider" style={{ alignSelf: 'stretch', margin: '20px -20px 15px -20px', height: '3px', backgroundColor: '#14141b', position: 'relative', zIndex: 2 }}></div>
+        <div className="title-divider" style={{ alignSelf: 'stretch', margin: '10px -20px 10px -20px', height: '3px', backgroundColor: 'var(--app-bg)', position: 'relative', zIndex: 2 }}></div>
         
         <Disclaimer />
       </div>
