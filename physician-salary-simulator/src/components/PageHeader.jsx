@@ -1,87 +1,89 @@
 import React, { useState } from 'react';
 
-// --- רכיבים פנימיים משותפים ---
+// --- רכיב כפתור הבית ---
 
-const Disclaimer = () => (
-  <p className="disclaimer-text" style={{
-    fontFamily: '"Secular One", sans-serif', margin: '0px 0 -10px 0', fontSize: '0.78rem',
-    fontWeight: 'normal', color: '#D8BFD8', maxWidth: '940px', lineHeight: '1.5', opacity: 0.7, textAlign: 'center'
-  }}>
-   יישומון זו הינו כלי עזר פרטי ואינו מוצר רשמי של שירותי בריאות כללית. המידע והחישובים המוצגים בו מבוססים על הערכות ופרשנות אישית של הסכמי השכר, ואין לראות בהם נתונים מחייבים או ייעוץ מקצועי. התוצאות בפועל עשויות להיות שונות. המידע הקובע והרשמי נמצא אך ורק בידי מחלקת משאבי אנוש והשכר בארגון.
-  </p>
-);
-
-const BackButton = ({ onClick }) => {
+const HomeButton = ({ onClick }) => {
   const [isHovered, setIsHovered] = useState(false);
+  
   return (
     <div 
       title="חזרה לדף הבית"
-      style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', width: 'fit-content' }}
-      onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}
+      style={{ 
+        cursor: 'pointer', 
+        display: 'flex', 
+        alignItems: 'center', 
+        justifyContent: 'center',
+        width: '48px', // רוחב קבוע לריבוע
+        height: '48px', // גובה קבוע לריבוע
+        borderRadius: '50px', // פינות מעוגלות של הריבוע
+        backgroundColor: isHovered ? '#29273a' : '#1C1B29', // רקע שמתבהר בעדינות בריחוף
+        border: '1px solid rgba(216, 191, 216, 0.15)',
+        transition: 'background-color 0.2s ease'
+      }}
+      onMouseEnter={() => setIsHovered(true)} 
+      onMouseLeave={() => setIsHovered(false)}
       onClick={onClick}
     >
-      <div style={{
-        width: '50px', height: '50px', borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center', boxSizing: 'border-box',
-        border: isHovered ? '5px solid var(--app-bg)' : '3px solid var(--app-bg)', 
-        backgroundColor: isHovered ? '#3e3c55' : '#2a293d', 
-        boxShadow: isHovered ? '0 8px 16px rgba(0,0,0,0.5)' : '0 2px 6px rgba(0,0,0,0.2)',
-        transform: isHovered ? 'scale(1.0)' : 'scale(1)', 
-        transition: 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
-      }}>
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={isHovered ? '#ffffff' : '#9CAF88'} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" style={{ transition: 'stroke 0.2s ease' }}>
+        <svg width="45" height="45" viewBox="0 0 24 24" fill="none" stroke={isHovered ? '#ffffff' : '#9CAF88'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ transition: 'stroke 0.2s ease' }}>
           <polyline points="11 18 17 12 11 6"></polyline>
         </svg>
-      </div>
     </div>
   );
 };
 
 // --- הרכיב הראשי של הכותרת ---
 
-const PageHeader = ({ title, subtitle, onBack }) => {
+const PageHeader = ({ title, onBack }) => {
   return (
     <div className="header-card-wrapper" style={{ position: 'relative', width: '100%', maxWidth: '1000px', margin: '0 auto 40px auto' }}>
       
-      {/* הגדרות עיצוב ייעודיות למובייל מוזרקות פנימה */}
       <style dangerouslySetInnerHTML={{__html: `
         @media (max-width: 768px) {
           .header-card-wrapper { margin-top: 25px !important; margin-bottom: 30px !important; }
-          .header-card { margin: 0 !important; padding: 25px 15px 10px 15px !important; background-color: #1c1b29 !important; background-image: none !important; }
-          .header-pink-bar { height: 10px !important; }
-          .header-card-wrapper .corner-action-btn { top: 3px !important; right: 15px !important; transform: scale(0.7) !important; transform-origin: top right !important; }
-          .page-header-title { font-size: 2.0rem !important; margin-bottom: 3px !important; }
-          .page-header-subtitle { font-size: 1.2rem !important; }
-          .title-divider { margin-top: 5px !important; margin-bottom: 5px !important; }
-          .disclaimer-text { font-size: 9.5px !important; line-height: 1.3 !important; margin-top: 2px !important; margin-bottom: 0px !important; }
+          .header-card { margin: 0 !important; padding: 15px 15px !important; background-color: #1c1b29 !important; }
+          /* התאמת האייקון למובייל - שומר על מרכוז אנכי וקרוב יותר לקצה */
+          .header-card .corner-home-btn { right: 0px !important; transform: translateY(-50%) scale(0.7) !important; }
+          .page-header-title { font-size: 2.2rem !important; margin-bottom: 0 !important; }
         }
       `}} />
 
-      <div className="corner-action-btn" style={{ position: 'absolute', top: '5px', right: '25px', zIndex: 10 }}>
-        <BackButton onClick={onBack} />
-      </div>
-
       <div className="header-card" style={{ 
-        backgroundColor: '#1c1b29', borderRadius: '24px', border: '1px solid rgba(216, 191, 216, 0.15)',
-        width: '100%', boxSizing: 'border-box', padding: '45px 20px 25px 20px', display: 'flex', 
-        flexDirection: 'column', alignItems: 'center', position: 'relative', 
-        boxShadow: '0 8px 24px rgba(0,0,0,0.15)', overflow: 'hidden' 
+        backgroundColor: '#1c1b29', 
+        borderRadius: '24px', 
+        border: '0px solid rgba(216, 191, 216, 0.15)',
+        width: '100%', 
+        boxSizing: 'border-box', 
+        padding: '20px 20px', 
+        display: 'flex', 
+        flexDirection: 'column', 
+        alignItems: 'center', 
+        position: 'relative', 
+        boxShadow: '0 8px 24px rgba(0,0,0,0.15)', 
+        overflow: 'hidden' /* הוחזר ל-hidden כי עכשיו הכל בתוך המסגרת */
       }}>
         
-        <div className="header-pink-bar" style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '20px', backgroundColor: '#D8BFD8', zIndex: 1 }} />
+        {/* מיקום האייקון - בתוך הכרטיסייה, ממורכז אנכית בצד ימין */}
+        <div className="corner-home-btn" style={{ 
+          position: 'absolute', 
+          top: '50%', 
+          right: '15px', 
+          transform: 'translateY(-50%)', /* הנוסחה למרכוז אנכי מושלם */
+          zIndex: 10 
+        }}>
+          <HomeButton onClick={onBack} />
+        </div>
 
-        <h1 className="page-header-title" style={{ fontFamily: '"Secular One", sans-serif', margin: '0 0 10px 0', fontSize: '2.8rem', fontWeight: 'bold', color: '#ffffff', position: 'relative', zIndex: 2 }}>
+        <h1 className="page-header-title" style={{ 
+          fontFamily: '"Secular One", sans-serif', 
+          margin: '0', 
+          fontSize: '2.8rem', 
+          fontWeight: 'bold', 
+          color: '#ffffff', 
+          position: 'relative', 
+          zIndex: 2 
+        }}>
           {title}
         </h1>
-
-        {subtitle && (
-          <h2 className="page-header-subtitle" style={{ fontFamily: '"Secular One", sans-serif', margin: '0', fontSize: '1.4rem', fontWeight: 'bold', color: '#9CAF88', opacity: 0.9, textAlign: 'center', position: 'relative', zIndex: 2 }}>
-            {subtitle}
-          </h2>
-        )}
-      
-        <div className="title-divider" style={{ alignSelf: 'stretch', margin: '10px -20px 10px -20px', height: '3px', backgroundColor: 'var(--app-bg)', position: 'relative', zIndex: 2 }}></div>
-        
-        <Disclaimer />
       </div>
     </div>
   );

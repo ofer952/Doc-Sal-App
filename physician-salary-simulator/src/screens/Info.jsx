@@ -83,7 +83,7 @@ const ModalPopup = ({ title, onClose, children }) => (
 );
 
 // --- תבנית תוכן חכמה לחלונות הקופצים ---
-const PopupContentTemplate = ({ text1, text2, customContent, table }) => (
+const PopupContentTemplate = ({ text1, text2, text3, customContent, table }) => (
   <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--modal-gap)', textAlign: 'right' }}>
     
     {text1 && (
@@ -95,6 +95,12 @@ const PopupContentTemplate = ({ text1, text2, customContent, table }) => (
     {text2 && (
       <div style={{ fontSize: 'var(--modal-text-size)', lineHeight: '1.5', color: '#ffffff', whiteSpace: 'pre-line' }}>
         {text2}
+      </div>
+    )}
+
+    {text3 && (
+      <div style={{ fontSize: 'var(--modal-text-size)', lineHeight: '1.5', color: '#ffffff', whiteSpace: 'pre-line' }}>
+        {text3}
       </div>
     )}
 
@@ -164,7 +170,7 @@ const Info = ({ onBack }) => {
     backgroundColor: 'var(--card-bg, #1c1b29)', 
     padding: '20px 30px 0px',
     borderRadius: '24px', 
-    border: `1px solid rgba(216, 191, 216, 0.15)`, 
+    border: `0px solid rgba(216, 191, 216, 0.15)`, 
     display: 'flex',
     flexDirection: 'column',
     height: 'fit-content'
@@ -175,10 +181,12 @@ const Info = ({ onBack }) => {
       category: "נתוני בסיס",
       items: [
         { 
-          title: "דרגה", 
+          title: "ותק ודרגה", 
           description: (
             <PopupContentTemplate 
-              text1="פירוט אופן קביעת הדרגה:"
+              text1="השכר המשולב נקבע על פי הותק והדרגה."
+              text2="כל שנת ותק מעלה את השכר המשולב ב- 1%."
+              text3="עבור הדרגה התוספת לשכר אינה קבועה - לכל דרגה תוספת שונה. ראה בטבלה פירוט לגבי אופן קביעת הדרגה."
               table={{
                 minWidth: '600px',
                 headers: ["תואר / תפקיד", "הסבר"],
@@ -225,15 +233,15 @@ const Info = ({ onBack }) => {
       category: "תוספות קבועות",
       items: [
         { 
-          title: "תוספת ניהול מרפאה", 
+          title: "ניהול מרפאה", 
           description: (
             <PopupContentTemplate 
               text1="ניהול מרפאה מקנה מספר הטבות:"
               customContent={
                 <ol style={{ paddingRight: '20px', margin: 0 }}>
-                  <li style={{ marginBottom: '10px' }}>תוספת קבועה (1129 - רופא אזורי) בהתאם לגודל המרפאה ומרכיב "ערך יום".</li>
-                  <li style={{ marginBottom: '10px' }}>הפחתת נורמת הנפשות (ראה טבלה בהיקף משרה).</li>
-                  <li>"שעות ניהול" - מנהל מרפאה זכאי לזמן למשימות ניהול. זמן זה יורד מסך השעות הפרונטליות הנדרשות.</li>
+                  <li style={{ marginBottom: '10px' }}>תוספת לשכר (1129 - רופא אזורי) הנקבעת בהתאם לגודל המרפאה ותעריף ערך יום של הרופא.</li>
+                  <li style={{ marginBottom: '10px' }}>הפחתת נורמת הנפשות (ראה טבלה ב"היקף משרה").</li>
+                  <li>"שעות ניהול" - מנהל מרפאה זכאי לזמן ייעודי למשימות ניהול. זמן זה יורד ממכסת השעות הפרונטליות הנדרשת.</li>
                 </ol>
               }
               table={{
@@ -273,7 +281,17 @@ const Info = ({ onBack }) => {
               text2="חתימה על הסכם קהילה מחייבת הוספת שעות פרונטליות (קבלת קהל) נוספות:&#10;עד 400 נפשות מעל הנורמה נדרש להוסיף 2 שעות.&#10;כל 150 נפשות נוספות (מהנפש הראשונה) נדרש להוסיף עוד שעה."
             />
           )
-        }
+        },
+        { 
+          title: 'תוכנית "רופא נלווה"', 
+          description: (
+            <PopupContentTemplate 
+              text1='התוכנית נועדה לאפשר לרופאים להעמיק את הידע המקצועי שלהם ולהיחשף לתחומי רפואה נוספים, על ידי התלוות לרופא אחר בזמן עבודתו הקלינית. מדובר על 5 שעות שבועיות אשר יורדות ממכסת השעות הפרונטליות.'
+              text2='תנאי השתתפות: התוכנית פתוחה רק לרופאים מומחים ברפואת משפחה ומותנית בקבלת אישור מההנהלה. לא ניתן לנצל באותו חודש קלנדרי גם "שעות השתלמות" וגם שעות במסגרת "רופא נלווה". יש לבחור במסלול אחד.'
+              text3='תגמול: בניגוד ל"השתלמות" ישנו תגמול כספי עבור "רופא נלווה". הוא מחושב כסך השעות שבוצעו בתוכנית במהלך החודש כפול "ערך שעה". התגמול מותנה בהעברת אישור מדי חודש למחלקת משאבי אנוש. על האישור להעיד על ביצוע השעות בפועל, ועליו להיות חתום על ידי הגורם האחראי במקום בו בוצעה ההתלוות.'
+            />
+          )
+        },
       ]
     }
   ];
@@ -326,17 +344,22 @@ const Info = ({ onBack }) => {
             --modal-text-size: 0.8rem;
             --modal-gap: 10px;
             --modal-table-fs: 0.75rem;
-            --modal-table-padding: 6px 5px; /* ריווח בתאי הטבלה */
+            --modal-table-padding: 7px 5px; /* ריווח בתאי הטבלה */
             --modal-table-lh: 1.2;
             --row-padding-y: 6px;
+            padding: 15px 10px !important;
           }
-          .main-layout { grid-template-columns: 1fr !important; gap: 25px !important; }
+          .main-layout { 
+             grid-template-columns: 1fr !important; 
+             gap: 30px !important; 
+             margin-top: 10px !important; /* דוחף מעט כלפי מטה כדי להתיישר עם הסימולטור */
+          }
           .data-card {
             padding: 10px 14px 0px !important;
           }
           .category-header {
             margin: -20px -14px 0px -14px !important;
-            padding: 4px 14px !important;
+            padding: 2px 14px !important;
           }
           .category-header h3 { font-size: 18px !important; }
           .info-item-button span { font-size: 16px !important; }
@@ -346,7 +369,7 @@ const Info = ({ onBack }) => {
         @keyframes slideUpModal { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
       `}} />
 
-      <PageHeader title="מידע נוסף" subtitle="רכיבי שכר ותוספות" onBack={onBack} />
+      <PageHeader title="מידע וזכויות" subtitle="רכיבי שכר ותוספות" onBack={onBack} />
 
       <div className="main-layout" style={{ display: 'grid', gap: '30px', width: '100%', maxWidth: '1000px', margin: '0 auto' }}>
         {infoData.map((section, index) => (

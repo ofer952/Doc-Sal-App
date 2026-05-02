@@ -309,7 +309,7 @@ const Simulator = ({ onNavigate }) => {
     const peerNotesRate = 35.52;
     const peerNotesAddition = peerNotesAmount * peerNotesRate;
 
-    const accompanyingAddition = data.accompanying === 'כן' ? 1200 : 0;
+    const accompanyingAddition = data.accompanying === 'כן' ? ((totalBaseSalary / monthStandard) * 20) : 0;
 
     const miudAmount = data.miudCount;
     const miudRate = 135.59;
@@ -406,7 +406,7 @@ const Simulator = ({ onNavigate }) => {
     backgroundColor: bgCard, 
     padding: '20px 30px 0px',
     borderRadius: '24px', 
-    border: `1px solid rgba(216, 191, 216, 0.15)`, 
+    border: `0px solid rgba(216, 191, 216, 0.15)`, 
     display: 'flex',
     flexDirection: 'column',
     height: 'fit-content'
@@ -634,7 +634,7 @@ const Simulator = ({ onNavigate }) => {
           }
           
           .data-card {
-            padding: 10px 14px 0px !important;
+            padding: 20px 14px 0px !important;
           }
           
           .category-header {
@@ -853,6 +853,7 @@ const Simulator = ({ onNavigate }) => {
             {accompanyingAddition > 0 && (
               <div style={listItemStyle}>
                 <div style={rowFlex}><span style={labelStyle}>1159 - רופא נלווה</span><span style={valStyle}>{formatCurrency(accompanyingAddition)}</span></div>
+                <div style={detailStyle}>(כמות: 20 | ערך שעה: {(totalBaseSalary / monthStandard).toFixed(2)})</div>
               </div>
             )}
 

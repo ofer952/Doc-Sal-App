@@ -18,25 +18,24 @@ const FormCard = ({ title, subtitle, onClick }) => {
         display: 'flex', 
         justifyContent: 'space-between', 
         alignItems: 'center',
-        backgroundColor: isHovered ? '#1c1b29' : '#14141b', 
-        borderRadius: '20px', 
-        border: isHovered ? '1px solid #ffffff' : '1px solid rgba(216, 191, 216, 0.15)', 
-        padding: '5px 30px', 
+        backgroundColor: isHovered ? '#1c1b29' : '#1C1B29', 
+        borderRadius: '24px', 
+        border: isHovered ? '1px solid rgba(216, 191, 216, 0.15)' : '1px solid transparent',
+        padding: '5px 20px', 
         cursor: 'pointer',
-        boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
         transition: 'all 0.3s ease',
         boxSizing: 'border-box',
         width: '100%'
       }}
     >
-      <div className="form-card-content" style={{ display: 'flex', alignItems: 'center', gap: '20px' }}> 
+      <div className="form-card-content" style={{ display: 'flex', alignItems: 'center', gap: '40px' }}> 
         <div className="form-card-icon" style={{ 
           display: 'flex', 
           justifyContent: 'center', 
           alignItems: 'center',
           flexShrink: 0
         }}>
-          <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke={isHovered ? '#ffffff' : '#9CAF88'} strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" style={{ transition: 'stroke 0.3s ease' }}>
+          <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke={isHovered ? '#ffffff' : '#9CAF88'} strokeWidth="1.0" strokeLinecap="round" strokeLinejoin="round" style={{ transition: 'stroke 0.3s ease' }}>
             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
             <polyline points="14 2 14 8 20 8"></polyline>
             <line x1="16" y1="13" x2="8" y2="13"></line>
@@ -48,8 +47,8 @@ const FormCard = ({ title, subtitle, onClick }) => {
         {/* טקסטים */}
         <div style={{ textAlign: 'right' }}>
           <h3 className="form-card-title" style={{ 
-            margin: '0', 
-            lineHeight: '1.1',
+            margin: '5px 0px 0px 0px', 
+            lineHeight: '0.8',
             color: isHovered ? '#ffffff' : themeColor, 
             fontSize: '1.2rem', 
             transition: 'color 0.3s ease' 
@@ -57,7 +56,7 @@ const FormCard = ({ title, subtitle, onClick }) => {
             {title}
           </h3>
           <p className="form-card-subtitle" style={{ 
-            margin: '-2px 0 0 0',
+            margin: '0px 0px 0px 0px',
             color: isHovered ? '#ffffff' : '#D8BFD8', 
             fontSize: '0.85rem', 
             transition: 'color 0.3s ease' 
@@ -107,39 +106,37 @@ const Forms = ({ onBack }) => {
             padding: 15px 10px !important; 
           }
 
-          #forms-root h1 { font-size: 2.0rem !important; margin-bottom: 5px !important;}
           #forms-root h2,
           #forms-root h3 { font-size: 20px !important; }
-
-          .disclaimer-text {
-            font-size: 11px !important;
-            line-height: 1.3 !important;
-          }
          
           /* --- התאמות מובייל לכרטיסיית הטופס --- */
           .form-card {
-            padding: 5px 15px !important; 
+            padding: 4px 10px !important; 
           }
           .form-card-content {
-            gap: 12px !important; 
+            gap: 20px !important; 
           }
           .form-card-icon svg {
-            width: 32px !important; 
-            height: 32px !important;
+            width: 28px !important; 
+            height: 28px !important;
           }
           #forms-root .form-card-title {
             font-size: 1.05rem !important;
+            margin: 0 !important;
+            line-height: 0.6 !important;
+            margin-top: 4px !important;
           }
           #forms-root .form-card-subtitle {
             font-size: 0.75rem !important; 
-            margin-top: -4px !important;
+            margin: 0 !important; 
+            margin-top: 0px !important; 
+            margin-bottom: -3px !important; 
           }
         }
       `}} />
 
       <PageHeader 
-        title="טפסים" 
-        subtitle="בחירת טופס למילוי" 
+        title="טפסים"
         onBack={onBack} 
       />
 

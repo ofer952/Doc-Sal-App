@@ -22,37 +22,37 @@ const calcDiff = (start, end) => {
   return diff > 0 ? diff : 0;
 };
 
-// --- רכיבים פנימיים משותפים ---
-
+// --- כפתור חזרה מותאם אישית ---
 const BackButton = ({ onClick }) => {
   const [isHovered, setIsHovered] = useState(false);
+  
   return (
     <div 
+      className="back-btn"  
       title="חזרה לדף הבית"
-      style={{
-        display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-        cursor: 'pointer', width: 'fit-content'
+      style={{ 
+        cursor: 'pointer', 
+        display: 'flex', 
+        alignItems: 'center', 
+        justifyContent: 'center',
+        width: '45px', 
+        height: '45px', 
+        borderRadius: '50px', 
+        backgroundColor: isHovered ? '#9CAF88' : '#1C1B29', 
+        border: '1px solid rgba(216, 191, 216, 0.15)',
+        transition: 'background-color 0.2s ease'
       }}
-      onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}
+      onMouseEnter={() => setIsHovered(true)} 
+      onMouseLeave={() => setIsHovered(false)}
       onClick={onClick}
     >
-      <div style={{
-        width: '50px', height: '50px', borderRadius: '50%',
-        display: 'flex', justifyContent: 'center', alignItems: 'center',
-        boxSizing: 'border-box',
-        border: isHovered ? '2px solid #ffffff' : '1px solid rgba(216, 191, 216, 0.2)', 
-        backgroundColor: isHovered ? '#2a293d' : '#1c1b29', 
-        boxShadow: isHovered ? '0 8px 16px rgba(0,0,0,0.5)' : '0 2px 6px rgba(0,0,0,0.2)',
-        transform: isHovered ? 'scale(1.1)' : 'scale(1)', 
-        transition: 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
-      }}>
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={isHovered ? '#ffffff' : '#9CAF88'} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" style={{ transition: 'stroke 0.2s ease' }}>
+        <svg className="back-btn-icon" width="45" height="45" viewBox="0 0 24 24" fill="none" stroke={isHovered ? '#1C1B29' : '#9CAF88'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ transition: 'stroke 0.2s ease' }}>
           <polyline points="11 18 17 12 11 6"></polyline>
         </svg>
-      </div>
     </div>
   );
 };
+
 
 // --- רכיבי המידע החדשים והחכמים (כפתור ומודאל) ---
 
@@ -133,7 +133,7 @@ const WorkScheduleForm = ({ onBack }) => {
   const themeColor = '#9CAF88';
   
   const [headerData, setHeaderData] = useState({
-    idNumber: '1-123456', lastName: 'ישראלי', firstName: 'ישראל', clinic: 'רמת השקמה',
+    idNumber: '', lastName: '', firstName: '', clinic: '',
     jobPercent: '100%', frontalHours: '35', community: 'לא', nonFrontalHours: '4.5', selfStudyHours: '2.5', totalWorkHours: '42'
   });
 
@@ -291,6 +291,35 @@ const WorkScheduleForm = ({ onBack }) => {
         input.time-input {
           background-color: transparent !important;
         }
+
+        @media (max-width: 768px) {
+          .top-bar {
+            padding: 8px 12px !important; /* מקטין את הריווח הפנימי של הפס */
+            margin-bottom: 15px !important; /* מקטין את המרווח מתחתיו */
+            border-radius: 16px !important; /* פינות פחות מעוגלות */
+          }
+
+          .print-btn {
+            padding: 6px 10px !important; /* מקטין את כפתור ההדפסה */
+            font-size: 0.8rem !important;
+            border-radius: 12px !important;
+          }
+          
+          .print-btn span {
+             font-size: 0.8rem !important;
+          }
+
+          .back-btn {
+            width: 30px !important; 
+            height: 30px !important; 
+          }
+
+          /* הגודל של החץ עצמו במובייל */
+          .back-btn-icon {
+            width: 28px !important;
+            height: 28px !important;
+          }
+        }
                   
         @media print {
           html, body, #root { background: white !important; background-color: white !important; margin: 0 !important; padding: 0 !important; }
@@ -305,6 +334,32 @@ const WorkScheduleForm = ({ onBack }) => {
             background-color: transparent !important; 
             border: none !important; appearance: none; -webkit-appearance: none; -moz-appearance: none; 
             padding: 0 !important; margin: 0 !important; height: auto !important; 
+          }
+
+          /* הסרת הרקע הכהה והשארת מסגרת נקייה בתיבות הסימון בהדפסה */
+          input[type="checkbox"] {
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+            appearance: none !important;
+            -webkit-appearance: none !important;
+            -moz-appearance: none !important;
+            background-color: white !important; /* דורש רקע לבן נקי */
+            border: 1px solid black !important; /* מסגרת שחורה חדה */
+            width: 14px !important;
+            height: 14px !important;
+            margin: 0 5px !important;
+            position: relative;
+          }
+          
+          /* יצירת ה-וי (V) בעצמנו כשהתיבה מסומנת בהדפסה */
+          input[type="checkbox"]:checked::before {
+            content: "✓";
+            position: absolute;
+            top: -8px;
+            left: 1px;
+            color: black !important; /* צבע ה-וי שחור במקום ירוק */
+            font-size: 18px !important;
+            font-weight: bold !important;
           }
           
           .print-wrapper { overflow: visible !important; width: auto !important; display: block !important; padding: 0 !important; }
@@ -339,23 +394,41 @@ const WorkScheduleForm = ({ onBack }) => {
         }
       `}} />
 
-      <div className="no-print" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px' }}>
+      {/* הפס הוורוד החדש (ייעלם בהדפסה בגלל הקלאס no-print) */}
+      <div className="top-bar no-print" style={{
+        backgroundColor: '#1C1B29', 
+        borderRadius: '24px', 
+        width: '210mm', /* רוחב A4 - בדיוק כמו הטופס */
+        maxWidth: '100%', /* הגנה למסכים קטנים במיוחד */
+        margin: '0 auto 20px auto', 
+        boxSizing: 'border-box', 
+        padding: '5px 15px', 
+        display: 'flex', 
+        justifyContent: 'space-between', /* מפריד בין הכפתורים לשני הקצוות */
+        alignItems: 'center', 
+        boxShadow: '0 8px 24px rgba(0,0,0,0.15)' 
+      }}>
+        
+        {/* כפתור חזרה */}
         <BackButton onClick={onBack} />
-        <button onClick={() => window.print()} style={{
-          backgroundColor: themeColor, color: '#14141b', border: 'none', padding: '10px 20px', borderRadius: '12px',
-          fontWeight: 'bold', fontSize: '1rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px', boxShadow: '0 4px 12px rgba(156, 175, 136, 0.3)'
-        }}>
-          <span>שמירה / הדפסה כ-PDF</span>
+
+        {/* כפתור הדפסה מקורי (אבל שיושב בתוך הפס) */}
+        <button className="print-btn" onClick={() => window.print()} style={{
+          backgroundColor: '#9CAF88', color: '#1C1B29', border: 'none', padding: '10px 15px', borderRadius: '18px',
+          fontWeight: 'bold', fontSize: '0.9rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px', 
+        }}
+        >
+          <span>שמירה/הדפסה כ-PDF</span>
         </button>
       </div>
 
-      <div className="print-wrapper" style={{ width: '100%', overflowX: 'auto', WebkitOverflowScrolling: 'touch', padding: '20px 0' }}>
+      <div className="print-wrapper" style={{ width: '100%', overflowX: 'auto', WebkitOverflowScrolling: 'touch', padding: '0 0 20px 0' }}>
         <div style={{ 
           width: '210mm', minWidth: '210mm', minHeight: 'auto', margin: '0 auto', backgroundColor: '#1c1b29', 
-          padding: '15mm', borderRadius: '4px', boxShadow: '0 20px 50px rgba(0,0,0,0.5)', position: 'relative', boxSizing: 'border-box'
+          padding: '15mm', borderRadius: '24px', boxShadow: '0 20px 50px rgba(0,0,0,0.5)', position: 'relative', boxSizing: 'border-box'
         }} className="header-box">
         
-        <h1 style={{ textAlign: 'center', color: '#ffffff', margin: '0 0 20px 0', fontSize: '1.8rem', borderBottom: '2px solid #555', paddingBottom: '10px' }}>טופס סידור עבודה – רופאים</h1>
+        <h1 style={{ textAlign: 'center', color: '#ffffff', margin: '0 0 20px 0', fontSize: '1.8rem', borderBottom: '1px solid #D8BFD8', paddingBottom: '10px' }}>טופס סידור עבודה – רופאים</h1>
         
         <div className="header-row" style={{ display: 'flex', flexWrap: 'wrap', gap: '5px', marginBottom: '20px', fontSize: '0.7rem' }}>
           <div style={{ display: 'flex', gap: '5px', alignItems: 'center' }}><span>מס' אישי:</span><input className="text-input" onFocus={(e) => e.target.select()} value={headerData.idNumber} onChange={e=>handleHeaderChange('idNumber', e.target.value)} /></div>
@@ -539,9 +612,9 @@ const WorkScheduleForm = ({ onBack }) => {
           <table style={{ width: '100%', borderCollapse: 'collapse', color: '#D8BFD8', fontSize: '0.7rem', lineHeight: '1.5' }}>
             <thead>
               <tr style={{ backgroundColor: '#D8BFD8', color: '#1c1b29' }}>
-                <th colSpan="2" style={{ border: '1px solid #555', padding: '8px', textAlign: 'right' }}></th>
-                {days.map(d => <th key={d} style={{ border: '1px solid #555', padding: '2px', textAlign: 'center', width: '55px' }}>{dayLabels[d]}</th>)}
-                <th style={{ border: '1px solid #555', padding: '4px', textAlign: 'center', width: '65px' }}>סה"כ שעות</th>
+                <th colSpan="2" style={{ border: '1px solid #1C1B29', padding: '8px', textAlign: 'right' }}></th>
+                {days.map(d => <th key={d} style={{ border: '1px solid #1C1B29', padding: '2px', textAlign: 'center', width: '55px' }}>{dayLabels[d]}</th>)}
+                <th style={{ border: '1px solid #1C1B29', padding: '4px', textAlign: 'center', width: '65px' }}>סה"כ שעות</th>
               </tr>
             </thead>
             <tbody>
@@ -773,7 +846,7 @@ const WorkScheduleForm = ({ onBack }) => {
           </div>
         </div>
 
-        <div className="signatures" style={{ display: 'flex', justifyContent: 'space-between', marginTop: '50px', borderTop: '1px solid #555', paddingTop: '20px', fontSize: '0.7rem', textAlign: 'right' }}>
+        <div className="signatures" style={{ display: 'flex', justifyContent: 'space-between', marginTop: '50px', borderTop: '1px solid #D8BFD8', paddingTop: '20px', fontSize: '0.7rem', textAlign: 'right' }}>
           <div>תאריך:</div>
           <div>חתימת הרופא/ה:</div>
           <div>חתימת מנהל/ת המרפאה:</div>
